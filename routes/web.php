@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\GuestCourseController;
+use App\Http\Controllers\admin\TamuKursusController;
 use App\Http\Controllers\admin\KursusAdminController;
 use App\Http\Controllers\admin\MentorController as AdminMentorController;
 
@@ -33,7 +35,7 @@ Route::prefix('/admin')->group(function(){
         Route::put('/{mentor}', [AdminMentorController::class, 'update'])->name('admin.mentor.update');
     });
 
-    // KURSUS ROUTES
+    // ADMIN KURSUS ROUTES
 
     Route::prefix('kursus')->group(function(){
         Route::get('/', [KursusAdminController::class, 'index'])->name('admin.kursus');
@@ -43,7 +45,17 @@ Route::prefix('/admin')->group(function(){
         Route::get("/{id}", [KursusAdminController::class, 'show'])->name('admin.kursus.show');
         Route::put("/{course}", [KursusAdminController::class, 'update'])->name('admin.kursus.update');
         Route::delete('/{id}', [KursusAdminController::class, 'destroy'])->name('admin.kursus.destroy');
+
+        Route::prefix('tamu')->group(function(){
+            Route::get('/{id}/add', [TamuKursusController::class, 'create'])->name('admin.tamu.add');
+            Route::post('/{id}', [TamuKursusController::class, 'store'])->name('admin.tamu.create');
+            Route::get('/{id}', [TamuKursusController::class, 'show'])->name('admin.tamu.show');
+            Route::put('/{id}/update', [TamuKursusController::class, 'update'])->name('admin.tamu.update');
+        });
     });
 });
 
 Route::get('/', [GuestController::class, 'index']);
+Route::get('/kursus', [GuestCourseController::class,'index'])->name('kursus.index');
+Route::get('/kursus/{slug}', [GuestCourseController::class, 'show'])->name('kursus.show');
+Route::post('/kursus/{slug}/register/{id}', [GuestCourseController::class, 'store'])->name('kursus.register');

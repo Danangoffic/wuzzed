@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use Carbon\Carbon;
 use App\Models\Course;
 use App\Models\Mentor;
+use App\Models\GuestCourse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 
 class KursusAdminController extends Controller
 {
@@ -49,11 +51,14 @@ class KursusAdminController extends Controller
                 'start_course' => 'required|date',
             ]);
 
+            $validatedData['slug'] = str()->slug($validatedData['name']);
+
             $course = Course::create($validatedData);
             return redirect()->route('admin.kursus.add')->with('success', 'Kursus berhasil ditambahkan');
         } catch (\Throwable $th) {
             //throw $th;
-            return redirect()->route('admin.kursus.add')->with('error', 'Kursus gagal ditambahkan')->withInput($request->all());
+            Log::debug("failed to create course: " . $th->getMessage());
+            return redirect()->route('admin.kursus.add')->with('error', 'Kursus gagal ditambahkan')->withInput();
         }
     }
 
@@ -63,7 +68,15 @@ class KursusAdminController extends Controller
     public function show(string $id)
     {
         $course = Course::findOrFail($id);
-        return view('admin.kursus.show', ['kursus' => $course]);
+        $guest = GuestCourse::with('guest')->where(['course_id' => $id])->paginate(20);
+        $guestPaid = GuestCourse::where(['course_id' => $id, 'status_payment' => 'paid'])->count();
+        $guestPending = GuestCourse::where(['course_id' => $id, 'status_payment' => 'pending'])->count();
+        return view('admin.kursus.show', ['kursus' => $course, 'guest' => $guest, 'paid' => $guestPaid, 'pending' => $guestPending]);
+    }
+
+    public function show_guests($id)
+    {
+        $guestCourse = Course::with('guestcourses.guest')->findOrFail($id);
     }
 
     /**
@@ -81,7 +94,22 @@ class KursusAdminController extends Controller
     {
         $course = Course::findOrFail($id);
         if($course){
-            $course->update($request->all());
+            // Validasi data
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'certificate' => 'required',
+                'thumbnail' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
+                'type' => 'required|in:free,premium',
+                'description' => 'required|string',
+                'price' => 'required|integer',
+                'level' => 'nullable|string',
+                'duration' => 'nullable|integer',
+                'status' => 'string|in:draft,published',
+                'mentor_name' => 'string|required|max:255',
+                'start_course' => 'required|date',
+            ]);
+            $validatedData['slug'] = str($validatedData['name'])->slug()->value();
+            $course->update($validatedData);
             return redirect()->route('admin.kursus')->with('success', 'Kursus berhasil Diupdate');
         }else{
             return redirect()->route('admin.kursus')->with('error', 'Kursus Gagal Diupdate');

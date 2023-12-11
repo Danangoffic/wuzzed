@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Guest;
+use App\Models\User;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,9 +27,9 @@ class Enrollment extends Model
     /**
      * Get the user that enrolled in the course.
      */
-    public function guest()
+    public function user()
     {
-        return $this->belongsTo(Guest::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

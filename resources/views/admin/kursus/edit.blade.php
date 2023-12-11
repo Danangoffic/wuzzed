@@ -5,13 +5,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tambah Kursus</h1>
+                    <h1>Ubah Kursus</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Kursus</a></li>
-                        <li class="breadcrumb-item active">Tambah Kursus</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.kursus') }}">Kursus</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('admin.kursus.show', $kursus->id) }}">{{ $kursus->name }}</a></li>
+                        <li class="breadcrumb-item active">Ubah</li>
                     </ol>
                 </div>
             </div>
@@ -144,7 +146,7 @@
                             </div>
 
                             <a href="{{ route('admin.kursus') }}" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-success float-right">Simpan Kursus</button>
+                            <button type="submit" class="btn btn-success float-right">Update Kursus</button>
 
                         </div>
                         <!-- /.card-body -->
@@ -158,15 +160,9 @@
 @endsection
 @push('after-style')
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote.min.css') }}">
-    @if (Session::has('success'))
-        <link rel="stylesheet" href="{{ asset('assets/admin/plugins/toastr/toastr.min.css') }}">
-    @endif
 @endpush
 @push('after-script')
     <script src="{{ asset('assets/admin/plugins/summernote/summernote.min.js') }}"></script>
-    @if (Session::has('success'))
-        <script src="{{ asset('assets/admin/plugins/toastr/toastr.min.js') }}"></script>
-    @endif
     <script>
         $(document).ready(function() {
             $('#description').summernote({
