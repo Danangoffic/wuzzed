@@ -24,6 +24,8 @@ class CourseFactory extends Factory
             'certificate' => 1,
             'type' => 'premium',
             'status' => 'published',
+            'jenis' => 'live',
+            'category_id' => rand(1,10),
             'price' => random_int(90000, 500000),
             'level' => 'all-level',
             'description' => fake()->text(),

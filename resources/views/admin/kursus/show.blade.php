@@ -154,24 +154,10 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($guest as $item)
-                                    @php
-                                        $idx = $loop->index + 1;
-                                        $guest = $item->guest;
-                                    @endphp
-                                    <tr>
-                                        <td>{{ $idx }}</td>
-                                        <td>{{ $guest->name }}</td>
-                                        <td>{{ $guest->phone }}</td>
-                                        <td>{{ $guest->email }}</td>
-                                        <td>{{ strtoupper($item->status_payment) }}</td>
-                                        <td>
-                                            <a class="btn btn-info btn-sm"
-                                                href="{{ route('admin.tamu.show', $item->id) }}">Detail</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            <tbody id="data-guest">
+                                <tr>
+                                    <td colspan="6" class="text-center">Loading...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -192,8 +178,8 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ $paid . ' Orang' }}</td>
-                                    <td>{{ $pending . ' Orang' }}</td>
+                                    <td id="data-status-1">fetching..</td>
+                                    <td id="data-status-0">fetching..</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -301,10 +287,45 @@
     <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            $("#table-guest").DataTable();
-            getProvinces();
+        $(document).ready(async function() {
+            // $("#table-guest").DataTable();
+            const init = await Promise.all([getProvinces(), getGuestData(), getGuestPaymentStatus(0),
+                getGuestPaymentStatus(1)
+            ]);
         });
+
+        async function getGuestData() {
+            const url = `{{ route('api.guest-course', $kursus->id) }}`;
+            fetch(url, {
+                headers: {
+                    authorization: `Bearer {{ session('token') }}`,
+                    // 'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                }
+            }).then(res => res.text()).then(data => {
+                // $("#table-guest").DataTable().destroy();
+                $("#data-guest").html(data);
+                $("#table-guest").DataTable();
+            });
+        }
+
+        async function getGuestPaymentStatus(status) {
+            const url = `{{ route('api.guest-course-status-payment', $kursus->id) }}`;
+            fetch(url, {
+                method: 'post',
+                body: JSON.stringify({
+                    type: status
+                }),
+                headers: {
+                    authorization: `Bearer {{ session('token') }}`,
+                    // 'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.text()).then(data => {
+                $("#data-status-" + status).html(data + " orang");
+            });
+        }
 
         async function getProvinces() {
             const url = 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json';

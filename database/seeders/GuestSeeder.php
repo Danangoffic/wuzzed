@@ -12,6 +12,19 @@ class GuestSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Guest::factory(100)->create();
+        for ($i=0; $i < 5000; $i++) {
+            $guest = \App\Models\Guest::create([
+                'name' => fake()->name(),
+                'email' => fake()->unique()->safeEmail(),
+                'phone' => fake()->phoneNumber(),
+                'province_id' => 34,
+                'city_id' => 34,
+                'knows_from' => 'lainnya'
+            ]);
+            $course = \App\Models\Course::with('guestcourses')->find(rand(1, 10));
+            $course->guestcourses()->create([
+                'guest_id' => $guest->id,
+            ]);
+        }
     }
 }

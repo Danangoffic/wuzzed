@@ -47,13 +47,34 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.kursus') }}"
-                        class="nav-link {{ Route::is('admin.kursus') ? 'active' : '' }}">
+                    <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>
                             Kursus
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.kursus') }}"
+                                class="nav-link {{ Route::is('admin.kursus') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    List
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.category.index') }}"
+                                class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    Category
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.mentor') }}"

@@ -5,13 +5,13 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class GuestCourseSeeder extends Seeder
+class CourseCategoriesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        \App\Models\GuestCourse::factory(500)->create();
+        \App\Models\CourseCategories::factory(10)->create();
     }
 }

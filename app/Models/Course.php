@@ -26,6 +26,8 @@ class Course extends Model
         'certificate',
         'thumbnail',
         'type',
+        'jenis',
+        'category_id',
         'description',
         'price',
         'level',
@@ -56,5 +58,15 @@ class Course extends Model
     public function guestcourses()
     {
         return $this->hasMany(GuestCourse::class);
+    }
+
+    /**
+     * Get the category that owns the Course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo(CourseCategories::class, 'category_id', 'id');
     }
 }

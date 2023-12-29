@@ -10,12 +10,59 @@ use App\Http\Controllers\Controller;
 
 class TamuKursusController extends Controller
 {
+    public function index()
+    {
+        if($request->user()->role == 'admin') {
+            $data = GuestCourse::with(['course','guest'])->latest()->get();
+            $view = (string) view('admin.kursus.list-tamu-kursus', ['guest' => $data]);
+            return response($view);
+        } else {
+            return redirect()->route('/login');
+        }
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function list_tamu_kursus_api(Request $request, $id)
     {
-        //
+        if($request->user()->role == 'mentor') {
+            $data = GuestCourse::with(['course','guest'])->where('mentor_id', $request->user()->mentor->id)->findOrFail($id);
+            $view = (string) view('admin.kursus.list-tamu-kursus', ['guest' => $data]);
+            return response($view);
+        } else {
+            $data = GuestCourse::with(['course','guest'])->where('course_id', $id)->get();
+            $view = (string) view('admin.kursus.list-tamu-kursus', ['guest' => $data]);
+            return response($view);
+        }
+        return response('not found', 404);
+    }
+
+    public function count_tamu_status_payment(Request $request, $id)
+    {
+        if(!$request->has('type')){
+            return abort(404, 'type must be provided');
+        }
+        $type = $request->post('type');
+        $status = 'pending';
+        if($type == 1){
+            $status = 'paid';
+        }
+        if($request->user()->role == 'mentor') {
+            $data = GuestCourse::where('mentor_id', $request->user()->mentor->id)
+                                ->where([
+                                    'course_id' => $id,
+                                    'status_payment'=> $status
+                                ])
+                                ->count();
+            return response($data);
+        } else {
+            $data = GuestCourse::where([
+                                    'course_id' => $id,
+                                    'status_payment'=> $status
+                                ])->count();
+            return response($data);
+        }
+        return abort(403, 'Forbidden');
     }
 
     /**
@@ -58,9 +105,9 @@ class TamuKursusController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Course $course, string $id)
     {
-        $detail = GuestCourse::with(['course','guest'])->findOrFail($id);
+        $detail = GuestCourse::with(['course','guest'])->where(['course_id' => $course->id, 'guest_id' => $id])->first();
         return view('admin.kursus.guest.show', ['detail' => $detail]);
     }
 

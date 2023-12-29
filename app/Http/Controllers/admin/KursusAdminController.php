@@ -17,7 +17,12 @@ class KursusAdminController extends Controller
      */
     public function index()
     {
-        $dataKursus = Course::latest()->paginate(15);
+        $initData = Course::with(['category']);
+        if(auth()->user()->role == 'mentor') {
+            $dataKursus = $initData->where('mentor_id', auth()->user()->id)->latest()->paginate(15);
+        } else {
+            $dataKursus = $initData->latest()->paginate(15);
+        }
         return view('admin.kursus.index', ['kursus' => $dataKursus]);
     }
 
@@ -27,7 +32,8 @@ class KursusAdminController extends Controller
     public function create()
     {
         $mentors = Mentor::all();
-        return view('admin.kursus.add', ['mentors' => $mentors]);
+        $categories = \App\Models\CourseCategories::all();
+        return view('admin.kursus.add', ['mentors' => $mentors, 'categories' => $categories]);
     }
 
     /**
@@ -49,6 +55,8 @@ class KursusAdminController extends Controller
                 'status' => 'string|in:draft,published',
                 'mentor_name' => 'string|required|max:255',
                 'start_course' => 'required|date',
+                'url_kursus' => 'nullable|string',
+                'category_id' => 'nullable|exist:course_categories,id'
             ]);
 
             $validatedData['slug'] = str()->slug($validatedData['name']);
@@ -67,11 +75,12 @@ class KursusAdminController extends Controller
      */
     public function show(string $id)
     {
-        $course = Course::findOrFail($id);
-        $guest = GuestCourse::with('guest')->where(['course_id' => $id])->paginate(20);
-        $guestPaid = GuestCourse::where(['course_id' => $id, 'status_payment' => 'paid'])->count();
-        $guestPending = GuestCourse::where(['course_id' => $id, 'status_payment' => 'pending'])->count();
-        return view('admin.kursus.show', ['kursus' => $course, 'guest' => $guest, 'paid' => $guestPaid, 'pending' => $guestPending]);
+        if(auth()->user()->role == 'mentor') {
+            $course = Course::where('mentor_id', auth()->user()->id)->findOrFail($id);
+        } else {
+            $course = Course::findOrFail($id);
+        }
+        return view('admin.kursus.show', ['kursus' => $course,]);
     }
 
     public function show_guests($id)
@@ -84,7 +93,8 @@ class KursusAdminController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('admin.kursus.edit', ['kursus' => $course]);
+        $categories = \App\Models\CourseCategories::all();
+        return view('admin.kursus.edit', ['kursus' => $course, 'categories' => $categories]);
     }
 
     /**
@@ -107,6 +117,8 @@ class KursusAdminController extends Controller
                 'status' => 'string|in:draft,published',
                 'mentor_name' => 'string|required|max:255',
                 'start_course' => 'required|date',
+                'url_kursus' => 'nullable|string',
+                'category_id' => 'nullable|exist:course_categories,id'
             ]);
             $validatedData['slug'] = str($validatedData['name'])->slug()->value();
             $course->update($validatedData);

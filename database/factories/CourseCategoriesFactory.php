@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\GuestCourse>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CourseCategories>
  */
-class GuestCourseFactory extends Factory
+class CourseCategoriesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,10 +16,11 @@ class GuestCourseFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->word();
+        $slug = str($name)->slug();
         return [
-            'course_id' => fake()->numberBetween(1,10),
-            'guest_id' => fake()->numberBetween(1, 500),
-            'status_payment' => 'pending',
+            'name' =>$name,
+            'slug' => $slug
         ];
     }
 }

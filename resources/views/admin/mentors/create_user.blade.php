@@ -20,8 +20,27 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{{ route('admin.mentor.store') }}" method="post">
+        @if (Session::has('success'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success">
+                        {{ Session::get('success') }}
+                    </div>
+                </div>
+            </div>
+        @endif
+        @if (Session::has('error'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger">
+                        {{ Session::get('error') }}
+                    </div>
+                </div>
+            </div>
+        @endif
+        <form action="{{ route('admin.mentor.store_user', $mentor->id) }}" method="post">
             @csrf
+            <input type="hidden" name="id" value="{{ $mentor->id }}">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-primary">
@@ -35,29 +54,32 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nama:</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    @if ($mentor->email) value="{{ $mentor->email }}" disabled @else value="{{ old('email') }}" required @endif>
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Nomor Telepon:</label>
-                                <input type="text" class="form-control" id="phone" name="phone">
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">Confirm Password:</label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                    name="password_confirmation">
                             </div>
 
                             <div class="mb-3">
                                 <label for="profession" class="form-label">Profession:</label>
-                                <input type="text" class="form-control" id="profession" name="profession" />
+                                <input type="text" class="form-control" id="profession" name="profession"
+                                    @if ($mentor->profession) value="{{ $mentor->profession }}" disabled @else value="{{ old('profession') }}" required @endif />
                             </div>
 
                             <div class="mb-3">
-                                <label for="profile_picture" class="form-label">Foto Profil:</label>
-                                <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+                                <label for="avatar" class="form-label">Foto Profil:</label>
+                                <input type="file" class="form-control" id="avatar" name="avatar">
                             </div>
                             <a href="{{ route('admin.mentor') }}" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-success float-right">Simpan Mentor</button>
