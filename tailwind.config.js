@@ -4,10 +4,15 @@ export default {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
+        "./node_modules/flowbite/**/*.js",
+        "node_modules/preline/dist/*.js",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                custom: ["Lexend", "sans-serif"],
+            },
+        },
     },
-    plugins: [],
+    plugins: [require("flowbite/plugin"), require("preline/plugin")],
 };
-

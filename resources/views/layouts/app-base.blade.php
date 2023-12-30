@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="UTF-8">
@@ -15,15 +15,12 @@
     @stack('after-style')
 </head>
 
-<body class="min-h-screen flex flex-col">
+<body class="w-full h-full flex flex-col">
 
-    @include('layouts.header')
-
-    <div id="app">
+    <div id="app" class="w-full h-full m-auto">
         @yield('content')
     </div>
 
-    @include('layouts.footer')
     @vite('resources/js/app.js')
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.min.js') }}"></script>

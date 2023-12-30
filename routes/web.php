@@ -46,4 +46,8 @@ Route::prefix('/admin')->group(function(){
     });
 });
 
-Route::get('/', [GuestController::class, 'index']);
+// Route::get('/', [GuestController::class, 'index']);
+Route::get('/', [GuestController::class, 'index'])->name('home');
+Route::get('/login', [GuestController::class, 'login'])->name('login');
+Route::get('/register', [GuestController::class, 'register'])->name('register');
+Route::get('/profile', [GuestController::class, 'profile'])->name('profile');
