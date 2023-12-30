@@ -78,10 +78,6 @@ Route::prefix('/admin')->group(function(){
     });
 });
 
-// Route::get('/login', function(){
-
-})->name("/login");
-Route::get('/', [GuestController::class, 'index']);
 Route::get('/', [GuestController::class, 'index'])->name('home');
 Route::get('/login', [GuestController::class, 'login'])->name('login');
 Route::get('/register', [GuestController::class, 'register'])->name('register');
