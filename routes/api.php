@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admin\TamuKursusController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::get('/guest-course/{id}/list', [TamuKursusController::class, 'list_tamu_kursus_api'])->name('api.guest-course');
+    Route::post('/guest-course/status/{id}/payment', [TamuKursusController::class, 'count_tamu_status_payment'])->name('api.guest-course-status-payment');
+    Route::get('/course/categories', [\App\Http\Controllers\admin\CourseCategoryController::class, 'get_by_api'])->name('api.category-course');
 });

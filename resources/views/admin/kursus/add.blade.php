@@ -85,6 +85,20 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
+                                        <label for="url_kursus">URL Kursus</label>
+                                        <input type="url" class="form-control" id="url_kursus" name="url_kursus"
+                                            required value="{{ old('url_kursus') }}" placeholder="https://">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="category_id">Kategori</label>
+                                        <select name="category_id" id="category_id" class="form-control">
+                                            <option value="" disabled>Pilih Kategori</option>
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
                                         <label for="price">Harga</label>
                                         <input type="number" class="form-control" id="price" name="price" required
                                             value="{{ old('price') }}">
@@ -101,8 +115,8 @@
 
                                     <div class="form-group mb-3">
                                         <label for="duration">Durasi</label>
-                                        <input type="number" class="form-control" id="duration" name="duration" required
-                                            value="{{ old('duration') }}">
+                                        <input type="number" class="form-control" id="duration" name="duration"
+                                            required value="{{ old('duration') }}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="status">Status</label>
@@ -119,8 +133,8 @@
 
                                     <div class="form-group mb-3">
                                         <label for="start_course">Tanggal Mulai Kursus</label>
-                                        <input type="date" class="form-control" id="start_course" name="start_course"
-                                            required value="{{ old('start_course') }}">
+                                        <input type="datetime-local" class="form-control" id="start_course"
+                                            name="start_course" required value="{{ old('start_course') }}">
                                     </div>
                                 </div>
                             </div>
@@ -138,6 +152,9 @@
     </section>
     <!-- /.content -->
 @endsection
+@push('before-style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/select2/css/select2.min.css') }}">
+@endpush
 @push('after-style')
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote.min.css') }}">
     @if (Session::has('success'))
@@ -145,6 +162,7 @@
     @endif
 @endpush
 @push('after-script')
+    <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/summernote/summernote.min.js') }}"></script>
     @if (Session::has('success'))
         <script src="{{ asset('assets/admin/plugins/toastr/toastr.min.js') }}"></script>
@@ -158,6 +176,7 @@
                 minHeight: null,
                 maxHeight: null
             });
+            $('#category_id').select2();
         });
         @if (Session::has('success'))
             toastr.success('Have fun storming the castle!', {{ session('success') }})

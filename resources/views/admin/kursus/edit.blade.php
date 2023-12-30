@@ -5,13 +5,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tambah Kursus</h1>
+                    <h1>Ubah Kursus</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Kursus</a></li>
-                        <li class="breadcrumb-item active">Tambah Kursus</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.kursus') }}">Kursus</a></li>
+                        <li class="breadcrumb-item"><a
+                                href="{{ route('admin.kursus.show', $kursus->id) }}">{{ $kursus->name }}</a></li>
+                        <li class="breadcrumb-item active">Ubah</li>
                     </ol>
                 </div>
             </div>
@@ -92,6 +94,22 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4">
                                     <div class="form-group mb-3">
+                                        <label for="url_kursus">URL Kursus</label>
+                                        <input type="url" class="form-control" id="url_kursus" name="url_kursus"
+                                            required value="{{ $kursus->url_kursus }}">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="category_id">Kategori</label>
+                                        <select name="category_id" id="category_id" class="form-control">
+                                            <option value="" disabled>Pilih Kategori</option>
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->id }}"
+                                                    @if ($kursus->category_id == $item->id) selected @endif>{{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
                                         <label for="price">Harga</label>
                                         <input type="number" class="form-control" id="price" name="price" required
                                             value="{{ $kursus->price }}">
@@ -116,8 +134,8 @@
 
                                     <div class="form-group mb-3">
                                         <label for="duration">Durasi</label>
-                                        <input type="number" class="form-control" id="duration" name="duration" required
-                                            value="{{ $kursus->duration }}">
+                                        <input type="number" class="form-control" id="duration" name="duration"
+                                            required value="{{ $kursus->duration }}">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="status">Status</label>
@@ -137,14 +155,15 @@
 
                                     <div class="form-group mb-3">
                                         <label for="start_course">Tanggal Mulai Kursus</label>
-                                        <input type="date" class="form-control" id="start_course" name="start_course"
-                                            required value="{{ date('Y-m-d', strtotime($kursus->start_course)) }}">
+                                        <input type="datetime=local" class="form-control" id="start_course"
+                                            name="start_course" required
+                                            value="{{ date('Y-m-d H:i', strtotime($kursus->start_course)) }}">
                                     </div>
                                 </div>
                             </div>
 
                             <a href="{{ route('admin.kursus') }}" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-success float-right">Simpan Kursus</button>
+                            <button type="submit" class="btn btn-success float-right">Update Kursus</button>
 
                         </div>
                         <!-- /.card-body -->
@@ -156,17 +175,15 @@
     </section>
     <!-- /.content -->
 @endsection
+@push('before-style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/select2/css/select2.min.css') }}">
+@endpush
 @push('after-style')
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote.min.css') }}">
-    @if (Session::has('success'))
-        <link rel="stylesheet" href="{{ asset('assets/admin/plugins/toastr/toastr.min.css') }}">
-    @endif
 @endpush
 @push('after-script')
+    <script src="{{ asset('assets/admin/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/summernote/summernote.min.js') }}"></script>
-    @if (Session::has('success'))
-        <script src="{{ asset('assets/admin/plugins/toastr/toastr.min.js') }}"></script>
-    @endif
     <script>
         $(document).ready(function() {
             $('#description').summernote({
@@ -176,6 +193,7 @@
                 minHeight: null,
                 maxHeight: null
             });
+            $('#category_id').select2();
         });
         @if (Session::has('success'))
             toastr.success('Have fun storming the castle!', {{ session('success') }})

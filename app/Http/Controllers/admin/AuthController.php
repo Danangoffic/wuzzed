@@ -30,7 +30,10 @@ class AuthController extends Controller
                 $check_pass = Hash::check($request->post('password'), $user->password);
                 if($check_pass){
                     if (Auth::attempt($credential)) {
+                        Auth::user()->tokens()->delete();
+                        $token = auth()->user()->createToken('auth_token');
                         $request->session()->regenerate();
+                        session()->put('token', $token->plainTextToken);
                         return redirect()->intended('admin');
                     }
                     return back()->withErrors([

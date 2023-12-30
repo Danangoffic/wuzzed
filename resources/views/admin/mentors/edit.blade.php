@@ -5,13 +5,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Blank Page</h1>
+                    <h1>Ubah Data Mentor</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Kursus</a></li>
-                        <li class="breadcrumb-item active">Ubah Kursus</li>
+                        <li class="breadcrumb-item"><a href="#">Mentor</a></li>
+                        <li class="breadcrumb-item active">Ubah Mentor</li>
                     </ol>
                 </div>
             </div>
@@ -20,13 +20,17 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{{ route('admin.kursus.update') }}" method="post">
-            @csrf
-            <div class="row">
-                <div class="col-md-6">
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <form action="{{ route('admin.kursus.update', $mentor->id) }}" method="post">
+                    @method('PUT')
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $mentor->id }}">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">General</h3>
+                            <h3 class="card-title">Form Update Mentor</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -37,64 +41,111 @@
                         <div class="card-body">
                             <!-- Title -->
                             <div class="mb-3">
-                                <label for="title" class="form-label">Title:</label>
-                                <input type="text" class="form-control" id="title" name="title" required>
+                                <label for="name" class="form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" required
+                                    value="{{ $mentor->name }}">
                             </div>
 
                             <!-- Description -->
                             <div class="mb-3">
-                                <label for="description" class="form-label">Description:</label>
-                                <textarea class="form-control" id="description" name="description" required></textarea>
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email"
+                                    value="{{ $mentor->email }}">
                             </div>
 
                             <!-- Price -->
                             <div class="mb-3">
-                                <label for="price" class="form-label">Price:</label>
-                                <input type="number" class="form-control" id="price" name="price" required>
+                                <label for="phone" class="form-label">Phone Number:</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required
+                                    value="{{ $mentor->phone }}">
                             </div>
 
                             <!-- Level -->
                             <div class="mb-3">
-                                <label for="level" class="form-label">Level:</label>
-                                <input type="text" class="form-control" id="level" name="level">
+                                <label for="profession" class="form-label">Profession:</label>
+                                <input type="text" class="form-control" id="profession" name="profession"
+                                    value="{{ $mentor->profession }}">
                             </div>
 
-                            <!-- Start Date -->
-                            <div class="mb-3">
-                                <label for="start_at" class="form-label">Start Date:</label>
-                                <input type="date" class="form-control" id="start_at" name="start_at">
-                            </div>
-
-                            <!-- Duration -->
-                            <div class="mb-3">
-                                <label for="duration" class="form-label">Duration:</label>
-                                <input type="number" class="form-control" id="duration" name="duration">
-                            </div>
-
-                            <!-- Status -->
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status:</label>
-                                <select class="form-control" id="status" name="status">
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Tambah Kursus</button>
-
+                        </div>
+                        <div class="card-footer">
+                            <a href="{{ route('admin.mentor') }}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" value="Create new Project"
+                                class="btn btn-success float-right">Update</button>
                         </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
+                </form>
+            </div>
+            <div class="col-md-3">
+                <form action="{{ route('admin.mentor.password', $mentor->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" value="{{ $mentor->id }}">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Change Password</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password:</label>
+                                <input type="password" class="form-control" title="password" id="password" name="password"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">Retype Password:</label>
+                                <input type="password" class="form-control" id="password_confirmation"
+                                    name="password_confirmation" required>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" value="Change Password" class="btn btn-success float-right"
+                                onclick="return confirm('Are you sure?')">Change Password</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-5">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Kursus Mentor</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nama Kursus</th>
+                                    <th>Tanggal Mulai</th>
+                                    <th>Tersertifikat</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($mentor->courses as $item)
+                                    <tr>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->start_course }}</td>
+                                        <td>{{ $item->certificate }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.mentor.kursus', $item->id) }}"
+                                                class="btn btn-info btn-sm">Detail</a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center">Belum ada kursus</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <a href="{{ route('admin.kursus') }}" class="btn btn-secondary">Cancel</a>
-                    <input type="submit" value="Create new Project" class="btn btn-success float-right">
-                </div>
-            </div>
-        </form>
+        </div>
+        <div class="row">
+
+        </div>
     </section>
     <!-- /.content -->
 @endsection

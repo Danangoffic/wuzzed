@@ -42,7 +42,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email:</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                                <input type="email" class="form-control" id="email" name="email">
                             </div>
 
                             <div class="mb-3">
@@ -51,8 +51,8 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="biography" class="form-label">Biografi:</label>
-                                <textarea class="form-control" id="biography" name="biography"></textarea>
+                                <label for="profession" class="form-label">Profession:</label>
+                                <input type="text" class="form-control" id="profession" name="profession" />
                             </div>
 
                             <div class="mb-3">

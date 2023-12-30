@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\GuestCourse;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Guest extends Model
 {
@@ -19,4 +20,9 @@ class Guest extends Model
                     'job_title',
                     'knows_from',
                 ];
+
+    public function guestcourses()
+    {
+        return $this->hasMany(GuestCourse::class);
+    }
 }
