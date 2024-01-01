@@ -1,3 +1,6 @@
+@php
+    use Illuminate\Support\Facades\Vite;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kursus Online</title>
-    @vite('resources/css/app.css')
+    <style>
+        {!! Vite::content('resources/css/app.css') !!}
+    </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/owl.carousel.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/owl.theme.default.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +29,9 @@
     </div>
 
     @include('layouts.footer')
-    @vite('resources/js/app.js')
+    <script>
+        {!! Vite::content('resources/js/app.js') !!}
+    </script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.min.js') }}"></script>
     @stack('after-script')
