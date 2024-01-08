@@ -25,10 +25,9 @@ return new class extends Migration
             $table->integer('price')->default(0)->nullable();
             $table->enum('level', ['all-level', 'beginner', 'intermediate', 'advance']);
             $table->longText('description')->nullable();
-            $table->string('mentor_name');
             $table->boolean('is_range')->default(false);
-            $table->dateTime('start_course');
-            $table->dateTime('end_course');
+            $table->dateTime('start_course')->nullable();
+            $table->dateTime('end_course')->nullable();
             $table->date('early_bird')->nullable();
             $table->integer('early_bird_price')->nullable();
             $table->string('url_course')->nullable();

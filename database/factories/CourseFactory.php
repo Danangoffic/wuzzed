@@ -29,7 +29,6 @@ class CourseFactory extends Factory
             'price' => random_int(90000, 500000),
             'level' => 'all-level',
             'description' => fake()->text(),
-            'mentor_name' => fake()->name(),
             'start_course' => now(),
             'duration' => random_int(90, 200),
         ];

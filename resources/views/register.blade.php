@@ -12,30 +12,74 @@
                         <h1 class="text-2xl mt-6 lg:mt-8 mb-4">Create Account</h1>
                         <p class="text-sm text-gray-500 mb-8">We provide variant data that you can use it in order to get the
                             better perfomance at sales</p>
+                        @if ($errors->any())
+                            <div class="block px-2 py-3 text-gray-900 bg-red-500 rounded-3xl mb-4">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (Session::has('registerError'))
+                            <div class="block px-2 py-3 text-gray-900 bg-red-500 rounded-3xl mb-4">
+                                <p>{{ Session::get('registerError') }}</p>
+                            </div>
+                        @endif
                         <div class="w-full bg-white rounded-3xl p-8 lg:p-10 mx-auto">
-                            <form class="space-y-6" action="#">
+                            <form class="space-y-6" action="{{ route('register.store') }}" method="POST">
+                                @csrf
+                                <div>
+                                    <label for="" class="block mb-4 text-sm font-medium text-gray-900"
+                                        dark:text-white>
+                                        Fullname
+                                    </label>
+                                    <input
+                                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        placeholder="Enter your fullname" type="text" name="name" id="name"
+                                        required value="{{ old('name') }}" autofocus autocomplete="false">
+                                    @error('name')
+                                        <span class="text-xs text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div>
                                     <label for="email"
-                                        class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Email
-                                        Address</label>
+                                        class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                                        Email Address
+                                    </label>
                                     <input type="email" name="email" id="email"
                                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="name@company.com" required>
+                                        placeholder="name@company.com" required autocomplete="false"
+                                        value="{{ old('email') }}">
+                                    @error('email')
+                                        <span class="text-xs text-red-700">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div>
                                     <label for="password"
                                         class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                                     <input type="password" name="password" id="password" placeholder="••••••••"
                                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        required>
-                                    <div class="text-xs text-right mt-1">
-                                        <a href="#" class="text-gray-400 underline">Forgot My Password</a>
-                                    </div>
+                                        required autocomplete="false">
+                                </div>
+                                <div>
+                                    <label for="password_confirmation"
+                                        class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
+                                        Password Confirmation</label>
+                                    <input type="password" name="password_confirmation" id="password_confirmation"
+                                        placeholder="••••••••"
+                                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        required autocomplete="false">
+                                    @error('password_confirmation')
+                                        <span class="text-xs text-red-700">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div>
                                     <button type="submit"
                                         class="w-full text-white bg-[#77C5FD] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-3 mt-8 mb-6 text-center">Register</button>
                                     <div class="text-center text-sm text-gray-400">
                                         Already have an account?
-                                        <a href="#" class="text-gray-400 underline">Login</a>
+                                        <a href="{{ route('login') }}" class="text-gray-400 underline">Login</a>
                                     </div>
                                 </div>
                             </form>

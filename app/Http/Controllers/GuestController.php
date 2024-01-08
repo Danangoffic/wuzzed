@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
@@ -12,20 +13,7 @@ class GuestController extends Controller
         return view('index');
     }
 
-    public function login()
-    {
-        return view('login');
-    }
 
-    public function register()
-    {
-        return view('register');
-    }
-
-    public function profile()
-    {
-        return view('profile.user-profile');
-    }
 
     public function course()
     {

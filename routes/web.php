@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\GuestCourseController;
 use App\Http\Controllers\admin\TamuKursusController;
 use App\Http\Controllers\admin\KursusAdminController;
+// use App\Http\Controllers\AuthController as UserAuthController;
 use App\Http\Controllers\admin\MentorController as AdminMentorController;
 
 /*
@@ -79,9 +80,11 @@ Route::prefix('/admin')->group(function(){
 });
 
 Route::get('/', [GuestController::class, 'index'])->name('home');
-Route::get('/login', [GuestController::class, 'login'])->name('login');
-Route::get('/register', [GuestController::class, 'register'])->name('register');
-Route::get('/profile', [GuestController::class, 'profile'])->name('profile');
+Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::post('/login', [App\Http\Controllers\AuthController::class, 'doLogin'])->name('login.store');
+Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+Route::post('/register', [App\Http\Controllers\AuthController::class, 'doRegister'])->name('register.store');
+Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
 Route::get('/kursus', [GuestCourseController::class,'index'])->name('kursus.index');
 Route::get('/kursus/{slug}', [GuestCourseController::class, 'show'])->name('kursus.show');
 Route::post('/kursus/{slug}/register/{id}', [GuestCourseController::class, 'store'])->name('kursus.register');

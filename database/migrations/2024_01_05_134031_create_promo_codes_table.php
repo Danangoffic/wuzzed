@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_course_activities', function (Blueprint $table) {
+        Schema::create('promo_codes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
-            $table->unsignedBigInteger('chapter_id');
-            $table->unsignedBigInteger('lesson_id');
+            $table->string('code');
+            $table->string('discount');
+            $table->date('valid_at');
+            $table->date('expired_at');
+            $table->integer('max_usage');
+            $table->integer('usage')->default(0);
+            $table->string('status')->default('inactive');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_course_activities');
+        Schema::dropIfExists('promo_codes');
     }
 };

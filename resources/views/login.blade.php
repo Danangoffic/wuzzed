@@ -13,7 +13,8 @@
                         <p class="text-sm text-gray-500 mb-8">We provide variant data that you can use it in order to get the
                             better perfomance at sales</p>
                         <div class="w-full bg-white rounded-3xl p-8 lg:p-10 mx-auto">
-                            <form class="space-y-6" action="#">
+                            <form class="space-y-6" action="{{ route('login.store') }}" method="POST">
+                                @csrf
                                 <div>
                                     <label for="email"
                                         class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Email
@@ -35,7 +36,8 @@
                                         class="w-full text-white bg-[#77C5FD] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-3 mt-8 mb-6 text-center">Sign
                                         In</button>
                                     <div class="text-center text-sm">
-                                        <a href="{{ route('register') }}" class="text-gray-400 underline">Create New Account</a>
+                                        <a href="{{ route('register') }}" class="text-gray-400 underline">Create New
+                                            Account</a>
                                     </div>
                                 </div>
                             </form>

@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Mentor;
+use App\Models\Student;
 use App\Models\Enrollment;
+use App\Models\ShoppingCart;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -55,5 +58,30 @@ class User extends Authenticatable
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    /**
+     * Get the mentor associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function mentor(): HasOne
+    {
+        return $this->hasOne(Mentor::class);
+    }
+
+    /**
+     * Get all of the shoppingCart for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function shoppingCarts(): HasMany
+    {
+        return $this->hasMany(ShoppingCart::class, 'user_id', 'id');
     }
 }
