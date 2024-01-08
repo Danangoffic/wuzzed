@@ -8,9 +8,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kursus Online</title>
-    <style>
+    {{-- <style>
         {!! Vite::content('resources/css/app.css') !!}
-    </style>
+    </style> --}}
+    @vite('resources/css/app.css')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/owl.carousel.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/owl.theme.default.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,9 +30,10 @@
     </div>
 
     @include('layouts.footer')
-    <script>
+    {{-- <script>
         {!! Vite::content('resources/js/app.js') !!}
-    </script>
+    </script> --}}
+    @vite('resources/js/app.js')
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.min.js') }}"></script>
     @stack('after-script')

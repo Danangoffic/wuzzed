@@ -8,7 +8,7 @@
                     <div>
                         <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="w-10 h-10" />
                     </div>
-                    <div class="px-12">
+                    <div class="lg:px-12">
                         <h1 class="text-2xl mt-6 lg:mt-8 mb-4">Log In</h1>
                         <p class="text-sm text-gray-500 mb-8">We provide variant data that you can use it in order to get the
                             better perfomance at sales</p>

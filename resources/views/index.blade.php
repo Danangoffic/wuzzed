@@ -18,7 +18,7 @@
                     </p>
                     <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
                         <a href="#"
-                            class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center bg-[#FF6905] text-white rounded-lg hover:bg-gray-100">
+                            class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-lg md:text-base font-medium text-center bg-[#FF6905] text-white rounded-lg hover:bg-gray-100">
                             Explore Courses
                         </a>
                     </div>
@@ -26,8 +26,8 @@
             </div>
         </div>
     </div>
-    <div class="mx-auto md:py-4 bg-gradient-to-t from-[#F8F4FF] to-[#FFFFFF]">
-        <div class="max-w-screen-xl mx-auto py-8 md:my-8 px-4 xl:px-12">
+    <div class="mx-auto lg:py-4 bg-gradient-to-t from-[#F8F4FF] to-[#FFFFFF]">
+        <div class="max-w-screen-xl mx-auto py-8 lg:my-8 px-4 xl:px-12">
             <div class="lg:grid lg:grid-cols-6 gap-x-16">
                 <div class="lg:col-span-1 my-auto">
                     <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Your <span class="text-[#7F56D9]">Active
@@ -39,11 +39,11 @@
                         @for ($i = 0; $i <= 3; $i++)
                             <div class="my-4">
                                 <a href="">
-                                    <div class="flex-none shadow-lg bg-white rounded-lg mx-2 md:w-[16rem]">
+                                    <div class="flex-none shadow-lg bg-white rounded-lg mx-2 lg:w-[16rem]">
                                         <img class="rounded-t-lg" src="{{ asset('assets/web/images/course/course-1.jpg') }}"
                                             alt="" />
                                         <div class="p-4">
-                                            <h3 class="text-base font-bold text-gray-900">Digital Marketing
+                                            <h3 class="text-lg md:text-base font-bold text-gray-900 mb-2">Digital Marketing
                                                 {{ $i + 1 }}</h3>
                                             <h5 class="text-sm text-gray-700 mb-2">Marketing Management / <span
                                                     class="text-gray-500">Marketing Introduction</span></h5>
@@ -59,7 +59,7 @@
                                                     <img src="{{ asset('assets/web/icons/ic-play.png') }}"
                                                         class="block w-4 h-4" alt="">
                                                 </div>
-                                                <h5 class="text-xs text-gray-700 ml-2">2 Hours 12 Minutes</h5>
+                                                <h5 class="text-sm md:text-xs text-gray-700 ml-2">2 Hours 12 Minutes</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -68,13 +68,13 @@
                         @endfor
                     </div>
                     <div
-                        class="hidden md:block md:absolute md:-right-10 md:top-0 bg-gradient-to-r from-transparent to-[#F8F4FF] blur w-96 h-96 z-40">
+                        class="hidden lg:block md:absolute md:-right-4 md:top-0 bg-gradient-to-r from-transparent to-[#F8F4FF] blur w-96 h-96 z-40">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-12 md:my-20 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-12 lg:my-20 px-4 xl:px-12">
         <h1 class="mb-0 md:md:mb-1 text-2xl md:text-3xl font-extrabold">Your <span class="text-[#7F56D9]">Completed
                 Courses</span>
         </h1>
@@ -84,26 +84,26 @@
             <a class="text-[#7F56D9] flex items-center justify-end" href=""><span class="underline mr-1">View
                     All</span><span class="material-icons">north_east</span></a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
             @for ($i = 0; $i <= 3; $i++)
                 <div class="p-4 w-full bg-white shadow-lg md:shadow-card rounded-lg">
                     <img class="rounded-lg mb-4" src="{{ asset('assets/web/images/course/course-1.jpg') }}"
                         alt="" />
-                    <h3 class="text-base font-bold text-gray-900 mb-1">Digital Marketing</h3>
-                    <h5 class="text-xs text-gray-700 mb-4">Accomplished on 7 July, 2022</h5>
+                    <h3 class="text-lg md:text-base font-bold text-gray-900 mb-2 mb-1">Digital Marketing</h3>
+                    <h5 class="text-sm md:text-xs text-gray-700 mb-4">Accomplished on 7 July, 2022</h5>
                     {{-- <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise
                         technology.</p> --}}
-                    <a href="" class="block w-full bg-[#F8F4FF] text-xs text-gray-700 text-center py-2 mb-2">Download
+                    <a href="" class="block w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 mb-2">Download
                         Certificate</a>
                     <a href="#"
-                        class="w-full bg-[#F8F4FF] text-xs text-gray-700 py-2 inline-flex justify-center items-center">Share
+                        class="w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 py-3 inline-flex justify-center items-center">Share
                         to LinkedIn <img src="{{ asset('assets/web/icons/ic-linkedin.png') }}" class="w-4 ml-2"
                             alt=""></a>
                 </div>
             @endfor
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-16 md:my-20 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-16 lg:my-20 px-4 xl:px-12">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Most <span class="text-[#7F56D9]">Popular Course</span>
         </h1>
         <div class="md:flex md:justify-between items-center mb-2 md:mb-6">
@@ -114,26 +114,26 @@
         </div>
         <div class="owl-carousel course-carousel owl-theme">
             @for ($i = 0; $i <= 8; $i++)
-                <div class="bg-white shadow-lg rounded-lg md:mx-2 cursor-pointer md:hover:-top-4 my-4">
+                <div class="bg-white shadow-lg rounded-lg md:mx-2 cursor-pointer my-4">
                     <img class="rounded-t-lg" src="{{ asset('assets/web/images/course/course-1.jpg') }}" alt="" />
                     <div class="p-4">
                         <div class="flex items-center space-x-5 mb-4">
                             <div class="flex items-center">
                                 <div><img src="{{ asset('assets/web/icons/ic-play.png') }}" class="w-5 h-5" alt="">
                                 </div>
-                                <h5 class="text-xs pl-2">13x Lessons</h5>
+                                <h5 class="text-sm md:text-xs pl-2">13x Lessons</h5>
                             </div>
                             <div class="flex items-center">
                                 <div class="flex items-center">
                                     <div><img src="{{ asset('assets/web/icons/ic-student.png') }}" class="w-5 h-4"
                                             alt=""></div>
-                                    <h5 class="text-xs pl-2">33</h5>
+                                    <h5 class="text-sm md:text-xs pl-2">33</h5>
                                 </div>
                             </div>
                         </div>
-                        <h3 class="mb-1 text-base font-bold text-gray-900 dark:text-white">Digital Marketing
+                        <h3 class="mb-2 text-lg md:text-base font-bold text-gray-900 dark:text-white">Digital Marketing
                         </h3>
-                        <h3 class="mb-3 text-base font-normal text-gray-500 dark:text-white">Rp99.000
+                        <h3 class="mb-3 text-lg md:text-base font-normal text-gray-500 dark:text-white">Rp99.000
                         </h3>
                         <div class="flex items-center mb-4">
                             <div class="flex flex-wrap items-center">
@@ -164,13 +164,13 @@
                                         d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                 </svg>
                             </div>
-                            <h5 class="ms-2 text-xs text-gray-900 dark:text-white">4.95</h5>
+                            <h5 class="ms-2 text-sm md:text-xs text-gray-900 dark:text-white">4.95</h5>
                             <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full items-center dark:bg-gray-400"></span>
-                            <h5 class="text-xs text-gray-900 dark:text-white">(33)</h5>
+                            <h5 class="text-sm md:text-xs text-gray-900 dark:text-white">(33)</h5>
                         </div>
                         <a href="#"
-                            class="w-full bg-[#F8F4FF] text-xs text-gray-700 text-center py-3 inline-flex justify-center items-center">Start
-                            Course <span class="material-icons !text-base">chevron_right</span></a>
+                            class="w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 inline-flex justify-center items-center">Start
+                            Course <span class="material-icons !text-lg md:text-base">chevron_right</span></a>
                     </div>
                 </div>
             @endfor
@@ -178,14 +178,14 @@
     </div>
     <div class="mx-auto my-8 md:my-12"
         style="background: linear-gradient(45deg, rgba(8, 79, 199, 0.90) 26.49%, rgba(127, 86, 217, 0.90) 85.53%)">
-        <div class="mx-auto py-12 md:py-16 relative px-4 xl:px-12">
+        <div class="mx-auto py-12 lg:py-16 relative px-4 xl:px-12">
             <div
                 class="w-40 h-40 md:w-60 md:h-72 bg-[#3E96EE] rounded-full absolute -left-20 bottom-10 md:top-10 blur-3xl">
             </div>
             <img src="{{ asset('assets/web/icons/ic-tripleline.png') }}" class="absolute left-0 bottom-5 md:top-10 w-36"
                 alt="">
             <div class="max-w-screen-xl mx-auto">
-                <div class="max-w-screen-sm mx-auto text-center mb-8 md:mb-16">
+                <div class="max-w-screen-sm mx-auto text-center mb-8 lg:mb-16">
                     <h3 class="text-2xl md:text-3xl mb-4 font-extrabold text-white">Why Choose Us?</h3>
                     <p class="text-sm md:text-md text-gray-50">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                         do eiusmod
@@ -239,19 +239,19 @@
             </div>
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-6 md:my-16 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-6 lg:my-16 px-4 xl:px-12">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Top 10 <span class="text-[#7F56D9]">Favorite
             </span>Video</h1>
         <h3 class="text-sm md:text-md text-gray-400 mb-4">Let’s join our best courses with our famous mentor
         </h3>
         <div class="top10-carousel owl-carousel owl-theme">
             @for ($i = 1; $i <= 10; $i++)
-                <div class="max-w-sm p-4 bg-white shadow-lg md:shadow-card rounded-lg my-6 mx-1 md:mx-2">
+                <div class="bg-white p-4 shadow-lg rounded-lg md:mx-2 my-4">
                     <img class="rounded-lg mb-3" src="{{ asset('assets/web/images/course/course-1.jpg') }}"
                         alt="" />
-                    <div class="flex items-center justify-between mb-1">
+                    <div class="flex items-center justify-between mb-1 space-x-2">
                         <div>
-                            <h3 class="text-base font-bold text-gray-900">Marketing Introduction
+                            <h3 class="text-lg md:text-base font-bold text-gray-900 mb-2">Marketing Introduction
                                 {{ $i }}</h3>
                         </div>
                         <svg width="16" height="16" viewBox="0 0 136 167" fill="none"
@@ -269,7 +269,7 @@
                         </svg> --}}
                     </div>
                     <h5 class="text-sm text-gray-700 mb-4">Digital Marketing</span></h5>
-                    <a href="#" class="block w-full bg-[#F8F4FF] text-xs text-gray-700 text-center py-3 mb-2">Get it
+                    <a href="#" class="block w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 mb-2">Get it
                         Now</a>
                 </div>
             @endfor
@@ -283,12 +283,12 @@
             </h3>
             <div class="top10-carousel owl-carousel owl-theme">
                 @for ($i = 1; $i <= 10; $i++)
-                    <div class="max-w-sm p-4 bg-white shadow-lg md:shadow-card rounded-lg my-6 mx-1 md:mx-2">
+                    <div class="p-4 bg-white shadow-lg rounded-lg my-6 mx-1 md:mx-2">
                         <img class="rounded-lg mb-3" src="{{ asset('assets/web/images/course/course-1.jpg') }}"
                             alt="" />
-                        <div class="flex items-center justify-between mb-1">
+                        <div class="flex items-center justify-between mb-1 space-x-2">
                             <div>
-                                <h3 class="text-base font-bold text-gray-900">Marketing Introduction
+                                <h3 class="text-lg md:text-base font-bold text-gray-900 mb-2">Marketing Introduction
                                     {{ $i }}</h3>
                             </div>
                             <svg width="16" height="16" viewBox="0 0 136 167" fill="none"
@@ -307,7 +307,7 @@
                         </div>
                         <h5 class="text-sm text-gray-700 mb-4">Digital Marketing</span></h5>
                         <a href="#"
-                            class="block w-full bg-[#F8F4FF] text-xs text-gray-700 text-center py-3 mb-2">Get it
+                            class="block w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 mb-2">Get it
                             Now</a>
                     </div>
                 @endfor
@@ -316,10 +316,10 @@
     </div>
     <div class="max-w-screen-xl mx-auto my-12 md:my-16 px-4 xl:px-12">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold text-[#7F56D9] text-center">Testimonials</h1>
-        <h3 class="mb-4 text-xs md:text-sm text-gray-400 text-center">What our members say about us</h3>
+        <h3 class="mb-4 text-sm md:text-md text-gray-400 text-center">What our members say about us</h3>
         <div class="testimonial-carousel owl-carousel owl-theme">
             @for ($i = 0; $i <= 5; $i++)
-                <div class="max-w-sm bg-white drop-shadow-xl md:shadow-card rounded-lg mt-4 mb-6 md:my-6 mx-1 md:mx-3">
+                <div class="bg-white drop-shadow-xl md:shadow-card rounded-lg mt-4 mb-6 md:my-6 mx-1">
                     <div class="p-6">
                         <div class="flex flex-wrap items-center mb-4">
                             <svg class="w-5 h-5 text-[#FF6905] me-1" aria-hidden="true"
@@ -354,12 +354,12 @@
                         <p class="mb-4 text-sm text-gray-500">December 12, 2022, 22.45</p>
                         <div class="flex items-center space-x-4">
                             <div>
-                                <img class="w-8 h-8 rounded-full" src="{{ asset('assets/web/icons/ic-person.png') }}"
+                                <img class="w-8 h-8 sm:w-5 sm:h-5 lg:w-8 lg:h-8 rounded-full" src="{{ asset('assets/web/icons/ic-person.png') }}"
                                     alt="">
                             </div>
                             <div class="flex items-center divide-x-2 divide-gray-300 gap-x-3">
-                                <h3 class="text-xs text-gray-900">Danang Arif Rahmanda</h3>
-                                <p class="text-xs text-gray-500 ps-2">Member</p>
+                                <h3 class="text-sm md:text-xs text-gray-900">Danang Arif Rahmanda</h3>
+                                <p class="text-sm md:text-xs text-gray-500 ps-2">Member</p>
                             </div>
                         </div>
                     </div>
@@ -377,15 +377,15 @@
             <a class="text-[#7F56D9] flex items-center justify-end" href=""><span class="underline mr-1">View
                     All</span><span class="material-icons">north_east</span></a>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             @for ($i = 0; $i <= 3; $i++)
-                <div class="max-w-sm bg-white drop-shadow-xl md:shadow-card rounded-lg  md:my-4">
+                <div class="w-full lg:max-w-sm bg-white drop-shadow-xl md:shadow-card rounded-lg lg:my-4">
                     <div class="p-5">
                         <h3 class="text-sm mb-1">Danang Arif Rahmanda</h3>
                         <div class="flex items-center mb-3">
-                            <p class="text-xs text-gray-900 bg-gray-200 rounded-xl py-1 px-2">Member</p>
+                            <p class="text-sm md:text-xs text-gray-900 bg-gray-200 rounded-xl py-1 px-2">Member</p>
                             <div class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full items-center dark:bg-gray-400"></div>
-                            <p class="text-xs text-gray-700 dark:text-white">December 12, 2022</p>
+                            <p class="text-sm md:text-xs text-gray-700 dark:text-white">December 12, 2022</p>
                         </div>
                         <p class="text-sm text-[#7E7EAA] leading-6">Lorem ipsum dolor sit amet, consectetur dolorili
                             adipiscing elit. Felis donec massa aliqua.</p>
@@ -406,7 +406,7 @@
                                     </g>
                                 </svg>
                             </div>
-                            <p class="text-xs text-gray-900 pl-2">13</p>
+                            <p class="text-sm md:text-xs text-gray-900 pl-2">13</p>
                         </div>
                     </div>
                 </div>
@@ -618,7 +618,6 @@
                 loop: true,
                 autoplay: false,
                 dots: true,
-                margin: 0,
                 responsive: {
                     0: {
                         nav: false,
@@ -630,21 +629,17 @@
                     },
                     600: {
                         nav: false,
-                        items: 2,
-                        slideBy: 2,
-                        dotsEach: 2,
-                    },
-                    1000: {
-                        nav: false,
                         items: 3,
                         slideBy: 3,
                         dotsEach: 3,
+                        margin: 0,
                     },
                     1200: {
                         nav: true,
                         items: 4,
                         slideBy: 4,
                         dotsEach: 4,
+                        margin: 0,
                     }
                 }
             });
@@ -667,14 +662,9 @@
                         items: 2,
                         slideBy: 2,
                         dotsEach: 2,
+                        margin: 10,
                     },
                     1000: {
-                        nav: false,
-                        items: 3,
-                        slideBy: 3,
-                        dotsEach: 3,
-                    },
-                    1200: {
                         nav: true,
                         items: 3,
                         slideBy: 3,

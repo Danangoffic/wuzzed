@@ -1,14 +1,14 @@
 <footer class="bg-[#F8F4FF] text-gray-600 mt-auto">
     <div class="max-w-screen-xl px-4 lg:px-12 pt-10 pb-6 mx-auto">
-        <div class="md:flex gap-x-12 space-y-8 md:space-y-0">
-            <div class="w-full md:w-[40%]">
+        <div class="md:flex gap-x-4 lg:gap-x-12 space-y-8 md:space-y-0">
+            <div class="w-full md:w-[35%] lg:w-[40%]">
                 <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse mb-6">
                     <img src="https://flowbite.com/docs/images/logo.svg" class="h-4" alt="Flowbite Logo" />
                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
                 </a>
                 <p class="text-sm">Veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
-            <div class="w-full md:w-[40%]">
+            <div class="w-full md:w-[35%] lg:w-[40%]">
                 <h5 class="text-sm font-semibold mb-6">Quick Links</h5>
                 <div class="grid grid-cols-2">
                     <div>
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full md:w-[20%]">
+            <div class="w-full md:w-[30%] lg:w-[20%]">
                 <h5 class="text-sm font-semibold mb-6">Contact Us</h5>
                 <ul>
                     <li class="flex items-center my-auto mb-2">
