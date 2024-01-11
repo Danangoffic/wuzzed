@@ -168,7 +168,7 @@
                             <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full items-center dark:bg-gray-400"></span>
                             <h5 class="text-sm md:text-xs text-gray-900 dark:text-white">(33)</h5>
                         </div>
-                        <a href="#"
+                        <a href="{{ route('detail-course') }}"
                             class="w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 inline-flex justify-center items-center">Start
                             Course <span class="material-icons !text-lg md:text-base">chevron_right</span></a>
                     </div>
