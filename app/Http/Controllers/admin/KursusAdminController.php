@@ -7,8 +7,10 @@ use App\Models\Course;
 use App\Models\Mentor;
 use App\Models\GuestCourse;
 use Illuminate\Http\Request;
+use App\Models\MentorsCourse;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class KursusAdminController extends Controller
 {
@@ -46,27 +48,59 @@ class KursusAdminController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'certificate' => 'required',
-                'thumbnail' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
+                'thumbnail' => 'nullable|file|image|mimes:jpeg,png,jpg|max:5120',
+                'poster' => 'nullable|file|image|mimes:jpeg,png,jpg|max:5120',
                 'type' => 'required|in:free,premium',
+                'jenis' => 'required|in:live,online,bootcamp,e-book',
                 'description' => 'required|string',
                 'price' => 'required|integer',
                 'level' => 'nullable|string',
                 'duration' => 'nullable|integer',
                 'status' => 'string|in:draft,published',
-                'mentor_name' => 'string|required|max:255',
-                'start_course' => 'required|date',
+                'mentor_id' => 'required',
+                'start_course' => 'nullable|date',
                 'url_kursus' => 'nullable|string',
-                'category_id' => 'nullable|exist:course_categories,id'
+                'category_id' => 'required'
             ]);
 
             $validatedData['slug'] = str()->slug($validatedData['name']);
+            $mentor = Mentor::findOrFail($request->post('mentor_id'));
+
+            // upload thumbnail and poster
+            try {
+                if ($request->hasFile('thumbnail')) {
+                    Log::debug("upload thumbnail", ['thumbnail' => $request->file('thumbnail')]);
+                    $validatedData['thumbnail'] = $request->file('thumbnail')->store('thumbnail', ['disk' => 'public']);
+                    Log::debug('thumbnail uploaded to ' . $validatedData['thumbnail']);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::debug("failed to upload thumbnail: " . $th->getMessage());
+                return redirect()->route('admin.kursus.add')->with('error',  'Thumbnail gagal diupload karena ' . $th->getMessage() . ' at line ' . $th->getLine() . ' at code ' . $th->getCode())->withInput();
+            }
+            try {
+                if ($request->hasFile('poster')) {
+                    $validatedData['poster'] = $request->file('poster')->store('poster', ['disk' => 'public']);
+                    Log::debug('poster uploaded to ' . $validatedData['poster']);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::debug("failed to upload poster: " . $th->getMessage());
+                return redirect()->route('admin.kursus.add')->with('error',  'Poster gagal diupload karena ' . $th->getMessage() . ' at line ' . $th->getLine() . ' at code ' . $th->getCode())->withInput();
+            }
+
+            // $validatedData['mentor_name'] = $mentor->name;
 
             $course = Course::create($validatedData);
+            $mentorCourse = MentorsCourse::create([
+                'course_id' => $course->id,
+                'mentor_id' => $mentor->id
+            ]);
             return redirect()->route('admin.kursus.add')->with('success', 'Kursus berhasil ditambahkan');
         } catch (\Throwable $th) {
             //throw $th;
             Log::debug("failed to create course: " . $th->getMessage());
-            return redirect()->route('admin.kursus.add')->with('error', 'Kursus gagal ditambahkan')->withInput();
+            return redirect()->route('admin.kursus.add')->with('error', 'Kursus gagal ditambahkan karena ' . $th->getMessage() . ' at line ' . $th->getLine() . ' at code ' . $th->getCode())->withInput();
         }
     }
 
@@ -78,7 +112,7 @@ class KursusAdminController extends Controller
         if(auth()->user()->role == 'mentor') {
             $course = Course::where('mentor_id', auth()->user()->id)->findOrFail($id);
         } else {
-            $course = Course::findOrFail($id);
+            $course = Course::with('mentors')->findOrFail($id);
         }
         return view('admin.kursus.show', ['kursus' => $course,]);
     }
@@ -135,6 +169,8 @@ class KursusAdminController extends Controller
     {
         $course = Course::findOrFail($id);
         if($course){
+            Storage::delete([$course->thumbnail, $course->poster]);
+            $course->mentors()->detach();
             $course->delete();
             return redirect()->route('admin.kursus')->with('success', 'Kursus berhasil Dihapus');
         }else{

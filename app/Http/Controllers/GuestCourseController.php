@@ -6,17 +6,20 @@ use Carbon\Carbon;
 use App\Models\Guest;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Models\CourseCategories;
 
 class GuestCourseController extends Controller
 {
     public function index()
     {
-        $dataKursus = Course::loadCount('guestcourses')
-                        ->where('status', 'published')
-                        ->where('start_at', '>=', Carbon::now())
-                        ->latest()
-                        ->paginate(15);
-
+        $dataKursus = CourseCategories::whereHas('courses', function($query){
+            $query->withCount('enrollments')
+            ->where('status', 'published')
+            ->where('start_at', '>=', Carbon::now())
+            ->latest()
+            ->take(8)->get();
+        })->get();
+        dd($dataKursus);
         // return view('kursus.index', ['kursus' => $dataKursus]);
     }
     public function show(string $slug)

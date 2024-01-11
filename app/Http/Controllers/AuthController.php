@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\User\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -46,15 +47,15 @@ class AuthController extends Controller
         ]);
     }
 
-    public function doRegister(Request $request)
+    public function doRegister(RegisterRequest $request)
     {
         if(Auth::check()){
             return redirect()->route('home');
         }
-        $credentials = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
+        $credentials = $request->only([
+            'name',
+            'email',
+            'password',
         ]);
         // create as user role
         $credentials['role'] = 'student';
