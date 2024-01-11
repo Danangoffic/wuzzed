@@ -13,10 +13,13 @@ class GuestController extends Controller
         return view('index');
     }
 
-
-
-    public function course()
+    public function detail_course()
     {
-        return view('profile.user-profile');
+        return view('detail-course');
+    }
+
+    public function detail_webinar()
+    {
+        return view('detail-webinar');
     }
 }

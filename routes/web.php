@@ -88,3 +88,6 @@ Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])-
 Route::get('/kursus', [GuestCourseController::class,'index'])->name('kursus.index');
 Route::get('/kursus/{slug}', [GuestCourseController::class, 'show'])->name('kursus.show');
 Route::post('/kursus/{slug}/register/{id}', [GuestCourseController::class, 'store'])->name('kursus.register');
+
+Route::get('/detail-course', [GuestController::class, 'detail_course'])->name('detail-course');
+Route::get('/detail-webinar', [GuestController::class, 'detail_webinar'])->name('detail-webinar');
