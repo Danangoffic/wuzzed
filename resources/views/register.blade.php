@@ -5,9 +5,6 @@
             <div
                 class="lg:w-3/5 p-8 md:p-16 bg-[#EFF1FD] flex items-center justify-center lg:rounded-tl-3xl lg:rounded-bl-3xl">
                 <div class="w-full">
-                    {{-- <div>
-                        <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="w-10 h-10" />
-                    </div> --}}
                     <div class="lg:px-12">
                         <div class="flex">
                             <img src="https://flowbite.com/docs/images/logo.svg" alt="Logo" class="w-10 h-10">
@@ -35,11 +32,11 @@
                                 <div>
                                     <label for="" class="block mb-4 text-sm font-medium text-gray-900"
                                         dark:text-white>
-                                        Fullname
+                                        Nama Lengkap
                                     </label>
                                     <input
                                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="Enter your fullname" type="text" name="name" id="name"
+                                        placeholder="Masukkan Nama Lengkap" type="text" name="name" id="name"
                                         required value="{{ old('name') }}" autofocus autocomplete="false">
                                     @error('name')
                                         <span class="text-xs text-red-700">{{ $message }}</span>
@@ -48,7 +45,7 @@
                                 <div>
                                     <label for="email"
                                         class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
-                                        Email Address
+                                        Email
                                     </label>
                                     <input type="email" name="email" id="email"
                                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -68,7 +65,7 @@
                                 <div>
                                     <label for="password_confirmation"
                                         class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">
-                                        Password Confirmation</label>
+                                        Konfirmasi Password</label>
                                     <input type="password" name="password_confirmation" id="password_confirmation"
                                         placeholder="••••••••"
                                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -81,8 +78,8 @@
                                     <button type="submit"
                                         class="w-full text-white bg-[#77C5FD] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-3 mt-4 mb-6 text-center">Register</button>
                                     <div class="text-center text-sm text-gray-400">
-                                        Already have an account?
-                                        <a href="{{ route('login') }}" class="text-gray-400 underline">Login</a>
+                                        Sudah punya Akun?
+                                        <a href="{{ route('login') }}" class="text-gray-400 underline">Masuk</a>
                                     </div>
                                 </div>
                             </form>

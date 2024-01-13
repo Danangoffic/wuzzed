@@ -34,6 +34,7 @@
         {!! Vite::content('resources/js/app.js') !!}
     </script> --}}
     @vite('resources/js/app.js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.min.js') }}"></script>
     @stack('after-script')

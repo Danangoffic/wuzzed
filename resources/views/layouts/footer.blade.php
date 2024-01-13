@@ -9,28 +9,28 @@
                 <p class="text-sm">Veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
             <div class="w-full md:w-[35%] lg:w-[40%]">
-                <h5 class="text-sm font-semibold mb-6">Quick Links</h5>
+                {{-- <h5 class="text-sm font-semibold mb-6">Tautan Cepat</h5> --}}
                 <div class="grid grid-cols-2">
                     <div>
                         <ul class="text-sm">
                             <li class="mb-2">
-                                <a href="#" class="hover:underline">Courses</a>
+                                <a href="#" class="hover:underline">Materi</a>
                             </li>
                             <li class="mb-2">
                                 <a href="#" class="hover:underline">Lounge</a>
                             </li>
                             <li class="mb-2">
-                                <a href="#" class="hover:underline">Our Service</a>
+                                <a href="#" class="hover:underline">Layanan Kami</a>
                             </li>
                         </ul>
                     </div>
                     <div>
                         <ul class="text-sm">
                             <li class="mb-2">
-                                <a href="#" class="hover:underline">Member Area</a>
+                                <a href="#" class="hover:underline">Ruang Anggota</a>
                             </li>
                             <li class="mb-2">
-                                <a href="#" class="hover:underline">Networking</a>
+                                <a href="#" class="hover:underline">Jaringan</a>
                             </li>
                             <li class="mb-2">
                                 <a href="#" class="hover:underline">FAQ</a>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="w-full md:w-[30%] lg:w-[20%]">
-                <h5 class="text-sm font-semibold mb-6">Contact Us</h5>
+                <h5 class="text-sm font-semibold mb-6">Hubungi Kami</h5>
                 <ul>
                     <li class="flex items-center my-auto mb-2">
                         <div class="flex items-center">
@@ -74,7 +74,7 @@
         </div>
         <hr class="bg-gray-400 text-gray-400 my-4">
         <div class="flex items-center justify-center">
-            <p class="text-sm text-gray-400">Copyright 2024 | All Rights Reserved</p>
+            <p class="text-sm text-gray-400">Copyright 2024 | Wuzzed</p>
         </div>
     </div>
 </footer>

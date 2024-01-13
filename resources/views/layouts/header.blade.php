@@ -1,7 +1,7 @@
 <nav class="bg-[#04016C] h-20 md:h-12 flex items-center justify-center">
     <div class="max-w-screen-xl px-4 lg:px-12 mx-auto">
         <a href="#">
-            <h3 class="text-white text-center inline-flex items-center">Free Courses 🌟 Sale Ends Soon, Get It Now <span
+            <h3 class="text-white text-center inline-flex items-center">Materi Gratis 🌟 Promo Akan Berakhir, Dapatkan Segera! <span
                     class="pl-4 material-icons">
                     arrow_forward
                 </span></h3>
@@ -25,7 +25,7 @@
                         <h3 class="pr-3 my-auto">Hi, <span
                                 class="text-[#04016C]">{{ explode(' ', Auth::user()->name)[0] }}</span>
                         </h3>
-                        <img class="w-8 h-8 rounded-full" src="{{ asset('assets/web/icons/ic-person.png') }}"
+                        <img class="w-8 h-8 rounded-full object-cover" src="{{ asset('assets/web/icons/ic-person.png') }}"
                             alt="user photo">
                     </button>
                 </div>
@@ -35,7 +35,7 @@
                     <ul class="py-2" aria-labelledby="user-menu-button">
                         <li>
                             <a href="{{ route('profile') }}"
-                                class="block px-6 py-4 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                                class="block px-6 py-4 text-sm text-gray-700 hover:bg-gray-100">Profil</a>
                         </li>
                         <li>
                             <a href="#" class="block px-6 py-4 text-sm text-gray-700 hover:bg-gray-100">Log
@@ -48,7 +48,7 @@
             {{-- NOT LOGGED IN --}}
             @guest
                 <a href="{{ route('login') }}"
-                    class="text-white bg-gradient-to-br from-[#04016C] to-[#7F56D9] hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 lg:px-7 lg:py-3 text-center">Login</a>
+                    class="text-white bg-gradient-to-br from-[#04016C] to-[#7F56D9] hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 lg:px-7 lg:py-3 text-center">Masuk</a>
             @endguest
 
             <button type="button" data-drawer-target="drawer-right" data-drawer-show="drawer-right"
@@ -68,12 +68,12 @@
                 <li>
                     <a href="#"
                         class="block py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-[#FF6905] lg:p-0"
-                        aria-current="page">Home</a>
+                        aria-current="page">Beranda</a>
                 </li>
                 <li>
                     <a href="#"
                         class="block py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-gray-900 lg:p-0"
-                        aria-current="page">Courses</a>
+                        aria-current="page">Materi</a>
                 </li>
                 <li>
                     <a href="#"
@@ -83,17 +83,17 @@
                 <li>
                     <a href="#"
                         class="block py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-gray-900 lg:p-0"
-                        aria-current="page">Our Service</a>
+                        aria-current="page">Layanan Kami</a>
                 </li>
                 <li>
                     <a href="#"
                         class="block py-2 px-3 text-white bg-blue-700 rounded lg:bg-transparent lg:text-gray-900 lg:p-0"
-                        aria-current="page">Member Area</a>
+                        aria-current="page">Ruang Anggota</a>
                 </li>
                 <li>
                     <button id="dropdown" data-dropdown-toggle="dropdownNetworking"
                         class="text-center inline-flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-[#FF6905] lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                        type="button">Networking <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                        type="button">Jaringan <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="m1 1 4 4 4-4" />
@@ -136,13 +136,13 @@
                     <li>
                         <a href="#"
                             class="flex items-center p-2 text-[#FF6905] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                            Home
+                            Beranda
                         </a>
                     </li>
                     <li>
                         <a href="#"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                            Courses
+                            Materi
                         </a>
                     </li>
                     <li>
@@ -154,20 +154,20 @@
                     <li>
                         <a href="#"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                            Our Service
+                            Layanan Kami
                         </a>
                     </li>
                     <li>
                         <a href="#"
                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                            Member Area
+                            Ruang Anggota
                         </a>
                     </li>
                     <li>
                         <button type="button"
                             class="flex items-center w-full p-2 text-sm text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                             aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                            <span class="flex-1 text-left rtl:text-right whitespace-nowrap">Networking</span>
+                            <span class="flex-1 text-left rtl:text-right whitespace-nowrap">Jaringan</span>
                             <svg class="w-2 h-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                 fill="none" viewBox="0 0 10 6">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
