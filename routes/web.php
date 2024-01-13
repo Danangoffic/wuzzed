@@ -6,9 +6,10 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\GuestCourseController;
+use App\Http\Controllers\admin\MentorController;
 use App\Http\Controllers\admin\TamuKursusController;
-use App\Http\Controllers\admin\KursusAdminController;
 // use App\Http\Controllers\AuthController as UserAuthController;
+use App\Http\Controllers\admin\KursusAdminController;
 use App\Http\Controllers\admin\MentorController as AdminMentorController;
 
 /*
@@ -45,6 +46,7 @@ Route::prefix('/admin')->group(function(){
             Route::put('/{id}/password', [AdminMentorController::class, 'update_password'])->name('admin.mentor.password');
             Route::get('/add/{id}/user', [AdminMentorController::class, 'create_user'])->name('admin.mentor.add_user');
             Route::post('/add/{id}/', [AdminMentorController::class, 'store_user'])->name('admin.mentor.store_user');
+            Route::post('/course/add', [MentorController::class, 'store_in_course'])->name('admin.mentor.store_in_course');
         });
 
         // ADMIN KURSUS ROUTES

@@ -68,8 +68,7 @@
                                 <div class="form-group mb-3">
                                     <label for="thumbnail">Thumbnail</label>
                                     <div>
-                                        <img src="{{ asset('storage/' . $kursus->thumbnail) }}" alt="Thumbnail"
-                                            class="img-thumbnail">
+                                        <img src="{{ asset($kursus->thumbnail) }}" alt="Thumbnail" class="img-thumbnail">
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
@@ -106,7 +105,9 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="mentor_name">Nama Mentor</label>
-                                    <p>{{ $kursus->mentor_name }}</p>
+                                    @foreach ($kursus->mentors as $m)
+                                        <p>{{ $m->name }}</p>
+                                    @endforeach
                                 </div>
 
                                 <div class="form-group mb-3">

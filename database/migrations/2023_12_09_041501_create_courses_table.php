@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("category_id")->constrained('course_categories')->cascadeOnDelete();
             $table->string('name');
             $table->string('slug');
             $table->boolean('certificate');
             $table->string('thumbnail')->nullable();
-            $table->longText('url_kursus')->nullable();
+            $table->string('poster')->nullable();
+            $table->string('url_kursus')->nullable();
             $table->enum('type', ['free', 'premium']);
             $table->enum('jenis', ['live', 'online', 'bootcamp', 'e-book']);
-            $table->enum('status', ['draft', 'published']);
-            $table->foreignId("category_id")->constrained('course_categories')->cascadeOnDelete();
+            $table->enum('status', ['draft', 'published'])->default('draft'); // Default status adalah 'draft'
             $table->integer('price')->default(0)->nullable();
             $table->enum('level', ['all-level', 'beginner', 'intermediate', 'advance']);
             $table->longText('description')->nullable();
@@ -30,7 +31,7 @@ return new class extends Migration
             $table->dateTime('end_course')->nullable();
             $table->date('early_bird')->nullable();
             $table->integer('early_bird_price')->nullable();
-            $table->string('url_course')->nullable();
+            // $table->string('url_course')->nullable();
             $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();

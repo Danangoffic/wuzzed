@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mentors', function (Blueprint $table) {
+        Schema::create('lesson_videos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone', 16)->nullable();
-            $table->string('profile_picture')->nullable();
-            $table->string('profession')->nullable();
+            $table->foreignId('lesson_id')->constrained()->cascadeOnDelete();
+            $table->string('url');
+            $table->string('title');
+            $table->string('description');
+            $table->integer('duration');
+            // $table->string('thumbnail');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mentors');
+        Schema::dropIfExists('lesson_videos');
     }
 };

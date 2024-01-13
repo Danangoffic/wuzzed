@@ -21,6 +21,20 @@ class MentorController extends Controller
         return view('admin.mentors.index', ['mentors' => $mentors]);
     }
 
+    public function get_by_api(Request $request)
+    {
+        $mentors = Mentor::all();
+        // generate options html
+        $html = "";
+        foreach($mentors as $mentor){
+            $html .= '<option value="'.$mentor->id.'">'.$mentor->name.'</option>';
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $html
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -45,10 +59,24 @@ class MentorController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'nullable|email|unique:mentors,email',
                 'phone' => 'nullable|string',
-                'profession' => 'required|string',
+                'profession' => 'nullable|string',
                 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 // tambahkan validasi untuk atribut lainnya
             ]);
+            if($request->ajax()){
+                return 'ajax';
+                $mentor = Mentor::create($validatedData);
+                $mentors = Mentor::all();
+                $html = '';
+                foreach($mentors as $mentor){
+                    $html .= '<option value="'.$mentor->id.'">'.$mentor->name.'</option>';
+                }
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Mentor berhasil ditambahkan',
+                    'data' => $html
+                ]);
+            }
 
             // Upload dan simpan gambar profil jika ada
             if ($request->hasFile('profile_picture')) {
@@ -70,6 +98,24 @@ class MentorController extends Controller
             //throw $th;
             Log::error('failed to create mentor with: ' . $th->getMessage());
             return back()->with('error', $th->getMessage())->withInput();
+        }
+    }
+
+    public function store_in_course(Request $request)
+    {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'nullable|email|unique:mentors,email',
+                'phone' => 'nullable|string',
+                'profession' => 'nullable|string',
+                'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                // tambahkan validasi untuk atribut lainnya
+            ]);
+            $mentor = Mentor::create($validatedData);
+            return redirect()->route('admin.kursus.add')->with('success', 'Data mentor berhasil ditambahkan');
+        } catch (\Throwable $th) {
+             return redirect()->route('admin.kursus.add')->with('error', 'Data mentor Gagal ditambahkan karena ' . $th->getMessage());
         }
     }
 

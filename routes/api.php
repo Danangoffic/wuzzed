@@ -22,4 +22,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/guest-course/{id}/list', [TamuKursusController::class, 'list_tamu_kursus_api'])->name('api.guest-course');
     Route::post('/guest-course/status/{id}/payment', [TamuKursusController::class, 'count_tamu_status_payment'])->name('api.guest-course-status-payment');
     Route::get('/course/categories', [\App\Http\Controllers\admin\CourseCategoryController::class, 'get_by_api'])->name('api.category-course');
+
+    // Route::post('/mentor', [\App\Http\Controllers\admin\MentorController::class, 'store'])->name('api.mentor.store');
 });
+Route::get('/mentors', [\App\Http\Controllers\admin\MentorController::class, 'get_by_api'])->name('api.mentors');

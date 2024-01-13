@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CourseCategoriesSeeder::class,
             CourserSeeder::class,
-            GuestSeeder::class,
+            // GuestSeeder::class,
 
         ]);
     }

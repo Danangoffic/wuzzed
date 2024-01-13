@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Mentor;
 use App\Models\Enrollment;
 use App\Models\GuestCourse;
+use App\Models\MentorsCourse;
+use App\Models\UserCourseActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,6 +28,8 @@ class Course extends Model
         'slug',
         'certificate',
         'thumbnail',
+        'poster',
+        'url_kursus',
         'type',
         'jenis',
         'category_id',
@@ -52,7 +57,7 @@ class Course extends Model
     */
     public function mentors()
     {
-        return $this->belongsToMany(Mentor::class);
+        return $this->belongsToMany(Mentor::class, MentorsCourse::class);
     }
 
     public function guestcourses()
@@ -69,4 +74,24 @@ class Course extends Model
     {
         return $this->belongsTo(CourseCategories::class, 'category_id', 'id');
     }
+
+    // has many students
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'enrollments', 'course_id', 'user_id');
+    }
+
+    // favorites
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorite_courses', 'course_id', 'user_id');
+    }
+
+    // user_course_activities
+    public function user_course_activities()
+    {
+        return $this->hasMany(UserCourseActivity::class);
+    }
+
+
 }
