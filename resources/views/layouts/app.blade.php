@@ -8,10 +8,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kursus Online</title>
-    {{-- <style>
-        {!! Vite::content('resources/css/app.css') !!}
-    </style> --}}
+    @production
+        <style>
+            {!! Vite::content('resources/css/app.css') !!}
+        </style>
+    @endproduction
+    @env('APP_ENV', 'local')
     @vite('resources/css/app.css')
+    @endenv
     <link rel="stylesheet" type="text/css" href="{{ asset('css/owl.carousel.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/owl.theme.default.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,10 +34,15 @@
     </div>
 
     @include('layouts.footer')
-    {{-- <script>
-        {!! Vite::content('resources/js/app.js') !!}
-    </script> --}}
+    @production
+        <script>
+            {!! Vite::content('resources/js/app.js') !!}
+        </script>
+    @endproduction
+    @env('APP_ENV', 'local')
     @vite('resources/js/app.js')
+    @endenv
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/owl.carousel.min.js') }}"></script>
