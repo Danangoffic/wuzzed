@@ -53,6 +53,7 @@
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
+                                            <th>Deskripsi</th>
                                             <th>Total Course</th>
                                             <th>Action</th>
                                         </tr>
@@ -61,6 +62,7 @@
                                         @foreach ($categories as $item)
                                             <tr>
                                                 <td>{{ $item->name }}</td>
+                                                <td>{{ $item->description }}</td>
                                                 <td>{{ $item->courses()->count() }}</td>
                                                 <td nowrap="nowrap" class="text-nowrap">
                                                     <form action="{{ route('admin.category.destroy', $item) }}"

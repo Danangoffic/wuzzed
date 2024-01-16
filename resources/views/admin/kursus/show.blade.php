@@ -57,69 +57,80 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
-                                    <label for="name">Nama Kursus</label>
+                                    <label for="name" class="mb-0">Nama Kursus</label>
                                     <p>{{ $kursus->name }}</p>
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="certificate">Sertifikat</label>
+                                    <label for="certificate" class="mb-0">Sertifikat</label>
                                     <p>{{ $kursus->certificate == 1 ? 'Ya' : 'Tidak' }}</p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="thumbnail">Thumbnail</label>
+                                    <label for="poster" class="mb-0">Poster</label>
                                     <div>
-                                        <img src="{{ asset($kursus->thumbnail) }}" alt="Thumbnail" class="img-thumbnail">
+                                        <img width="450" src="{{ asset('storage/' . $kursus->poster) }}" alt="Poster"
+                                            class="img-thumbnail">
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="type">Tipe</label>
-                                    <p>{{ $kursus->type }}</p>
+                                    <label for="thumbnail" class="mb-0">Thumbnail</label>
+                                    <div>
+                                        <img width="200" src="{{ asset('storage/' . $kursus->thumbnail) }}"
+                                            alt="Thumbnail" class="img-thumbnail">
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="description">Deskripsi</label>
-                                    <div class="card border-1">
-                                        <div class="card-body">
-                                            <?= $kursus->description ?>
-                                        </div>
-                                    </div>
+                                    <label for="type" class="mb-0">Jenis</label>
+                                    <p class="text-uppercase">{{ $kursus->jenis }}</p>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="type" class="mb-0">Tipe</label>
+                                    <p class="text-uppercase">{{ $kursus->type }}</p>
                                 </div>
                             </div>
                             <div class="col-md-2"></div>
                             <div class="col-md-4">
                                 <div class="form-group mb-3">
-                                    <label for="price">Harga</label>
+                                    <label for="link" class="mb-0">Link Kursus</label>
+                                    <p>
+                                        <a class="text-link" id="link_kursus">{{ $kursus->url_kursus }}</a>
+                                    </p>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="price" class="mb-0">Harga</label>
                                     <p>Rp {{ number_format($kursus->price, 0, ',', '.') }}</p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="level">Tingkat</label>
+                                    <label for="level" class="mb-0">Tingkat</label>
                                     <p>{{ $kursus->level }}</p>
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="duration">Durasi</label>
+                                    <label for="duration" class="mb-0">Durasi</label>
                                     <p>{{ $kursus->duration }} Menit</p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="status">Status</label>
+                                    <label for="status" class="mb-0">Status</label>
                                     <p>{{ strtoupper($kursus->status) }}</p>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="mentor_name">Nama Mentor</label>
+                                    <label for="mentor_name" class="mb-0">Nama Mentor</label>
                                     @foreach ($kursus->mentors as $m)
                                         <p>{{ $m->name }}</p>
                                     @endforeach
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <label for="start_course">Tanggal Mulai Kursus</label>
-                                    <p>{{ date('Y-m-d', strtotime($kursus->start_course)) }}</p>
+                                    <label for="start_course" class="mb-0">Tanggal Mulai Kursus</label>
+                                    <p>{{ date('d-m-Y H:i', strtotime($kursus->start_course)) }}</p>
                                 </div>
                             </div>
+
                         </div>
 
                         <a href="{{ route('admin.kursus') }}" class="btn btn-secondary">Kembali</a>
 
-                        <button type="submit" class="btn btn-primary float-right">Tambahkan Gambar Kursus</button>
+                        {{-- <button type="submit" class="btn btn-primary float-right">Tambahkan Gambar Kursus</button> --}}
                         <a href="{{ route('admin.kursus.edit', $kursus->id) }}"
                             class="btn btn-success float-right mr-2">Ubah</a>
 
@@ -141,9 +152,9 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <a href="#modalFormAddGuest" data-toggle="modal" data-target="#modalFormAddGuest"
+                        {{-- <a href="#modalFormAddGuest" data-toggle="modal" data-target="#modalFormAddGuest"
                             class="btn btn-primary mb-3">Tambahkan Tamu
-                            Manual</a>
+                            Manual</a> --}}
                         <table class="table table-hover table-bordered" id="table-guest">
                             <thead>
                                 <tr>

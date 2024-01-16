@@ -18,7 +18,7 @@ class AdminOrMentorMiddleware
         $user = $request->user();
 
         // Periksa apakah pengguna memiliki peran admin atau mentor
-        if ($user && ($user->role === 'admin' || $user->role === 'mentor')) {
+        if ($user && in_array(strtolower($user->role), ['admin', 'mentor'])) {
             return $next($request);
         }
 

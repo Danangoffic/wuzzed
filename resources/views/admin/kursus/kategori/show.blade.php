@@ -49,6 +49,10 @@
                             <div>{{ $category->name }}</div>
                         </div>
                         <div class="mb-3">
+                            <label for="name" class="form-label">Deskripsi Singkat Kategori</label>
+                            <div>{{ $category->description }}</div>
+                        </div>
+                        <div class="mb-3">
                             <label for="thumbnail" class="form-label">Thumbnail </label>
                             @if ($category->thumbnail)
                                 <div>
@@ -81,7 +85,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($category->courses() as $item)
+                                @forelse ($category->courses as $item)
                                     <tr>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ date('d F Y', strtotime($item->start_course)) }}</td>
@@ -92,7 +96,7 @@
                                                 {{ floor($item->duration / 60) . ' Jam ' . $item->duration % 60 . ' Menit' }}
                                             @endif
                                         </td>
-                                        <td>{{ $item->status }}}</td>
+                                        <td>{{ $item->status }}</td>
                                         <td nowrap="nowrap" class="text-nowrap">
                                             <form action="{{ route('admin.kursus.destroy', $item) }}" method="post"
                                                 class="text-inline">

@@ -10,7 +10,7 @@ class CourseCategories extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'thumbnail'];
+    protected $fillable = ['name', 'slug', 'description', 'thumbnail'];
 
     /**
      * Get all of the courses for the CourseCategories

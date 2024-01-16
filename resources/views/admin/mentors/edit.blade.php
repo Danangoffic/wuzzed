@@ -21,9 +21,31 @@
     <!-- Main content -->
     <section class="content">
 
-
+        <div class="row mb-3">
+            <div class="col-md-12">
+                @if (Session::has('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-12">
+                @if ($mentor->user)
+                    <a href="{{ route('admin.mentor.add_user', ['id' => $mentor->id]) }}"
+                        class="btn btn-primary btn-sm mb-3">Ubah User</a>
+                @else
+                    <a href="{{ route('admin.mentor.add_user', ['id' => $mentor->id]) }}"
+                        class="btn btn-primary btn-sm mb-3">Tambahkan User</a>
+                @endif
+            </div>
+            <div class="col-md-6">
                 <form action="{{ route('admin.kursus.update', $mentor->id) }}" method="post">
                     @method('PUT')
                     @csrf
@@ -53,14 +75,11 @@
                                     value="{{ $mentor->email }}">
                             </div>
 
-                            <!-- Price -->
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Phone Number:</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" required
-                                    value="{{ $mentor->phone }}">
+                                <label for="biography" class="form-label">Biography:</label>
+                                <textarea name="biography" id="biography" cols="30" rows="10" class="form-control">{{ $mentor->biography }}</textarea>
                             </div>
 
-                            <!-- Level -->
                             <div class="mb-3">
                                 <label for="profession" class="form-label">Profession:</label>
                                 <input type="text" class="form-control" id="profession" name="profession"
@@ -78,35 +97,7 @@
                     <!-- /.card -->
                 </form>
             </div>
-            <div class="col-md-3">
-                <form action="{{ route('admin.mentor.password', $mentor->id) }}" method="post">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="id" value="{{ $mentor->id }}">
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Change Password</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password:</label>
-                                <input type="password" class="form-control" title="password" id="password" name="password"
-                                    required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password_confirmation" class="form-label">Retype Password:</label>
-                                <input type="password" class="form-control" id="password_confirmation"
-                                    name="password_confirmation" required>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" value="Change Password" class="btn btn-success float-right"
-                                onclick="return confirm('Are you sure?')">Change Password</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Daftar Kursus Mentor</h3>
@@ -149,3 +140,20 @@
     </section>
     <!-- /.content -->
 @endsection
+@push('after-style')
+    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote.min.css') }}">
+@endpush
+@push('after-script')
+    <script src="{{ asset('assets/admin/plugins/summernote/summernote.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#biography').summernote({
+                placeholder: 'Tambahkan biografi mentor',
+                tabsize: 2,
+                height: 300,
+                minHeight: null,
+                maxHeight: null
+            });
+        });
+    </script>
+@endpush

@@ -46,8 +46,9 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="phone" class="form-label">Nomor Telepon:</label>
-                                <input type="text" class="form-control" id="phone" name="phone">
+                                <label for="biography" class="form-label">Biography:</label>
+                                <textarea name="biography" placeholder="input biografi mentor/fasilitator" id="biography" cols="30" rows="10"
+                                    class="form-control"></textarea>
                             </div>
 
                             <div class="mb-3">

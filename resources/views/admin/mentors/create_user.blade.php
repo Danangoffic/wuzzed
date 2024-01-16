@@ -5,13 +5,27 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tambah Mentor</h1>
+                    <h1>
+                        @if ($type_form == 'create')
+                            Tambah
+                        @elseif($type_form == 'edit')
+                            Ubah
+                        @endif
+                        User
+                    </h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Mentor</a></li>
-                        <li class="breadcrumb-item active">Tambah Mentor</li>
+                        <li class="breadcrumb-item active">
+                            @if ($type_form == 'create')
+                                Tambah
+                            @elseif($type_form == 'edit')
+                                Ubah
+                            @endif
+                            User
+                        </li>
                     </ol>
                 </div>
             </div>
@@ -38,14 +52,25 @@
                 </div>
             </div>
         @endif
-        <form action="{{ route('admin.mentor.store_user', $mentor->id) }}" method="post">
+        <form action="{{ $form_action }}" method="post" enctype="multipart/form-data">
             @csrf
+            @if ($type_form == 'edit')
+                @method('PUT')
+            @endif
             <input type="hidden" name="id" value="{{ $mentor->id }}">
+            <input type="hidden" name="type" value="{{ $type_form }}">
             <div class="row">
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Form Tambah mentor</h3>
+                            <h3 class="card-title">Form
+                                @if ($type_form == 'create')
+                                    Tambah
+                                @elseif($type_form == 'edit')
+                                    Ubah
+                                @endif
+                                User
+                            </h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -58,17 +83,26 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email:</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    @if ($mentor->email) value="{{ $mentor->email }}" disabled @else value="{{ old('email') }}" required @endif>
+                                    @if ($mentor->email) value="{{ $mentor->email }}" @else value="{{ old('email') }}" required @endif>
+                                @error('email')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password:</label>
                                 <input type="password" class="form-control" id="password" name="password">
+                                @error('password')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="password_confirmation" class="form-label">Confirm Password:</label>
                                 <input type="password" class="form-control" id="password_confirmation"
                                     name="password_confirmation">
+                                @error('password_confirmation')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
@@ -80,6 +114,9 @@
                             <div class="mb-3">
                                 <label for="avatar" class="form-label">Foto Profil:</label>
                                 <input type="file" class="form-control" id="avatar" name="avatar">
+                                @error('avatar')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <a href="{{ route('admin.mentor') }}" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-success float-right">Simpan Mentor</button>

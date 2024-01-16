@@ -31,6 +31,15 @@
                         {{ session('success') }}
                     </div>
                 @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="row mb-3">
@@ -73,7 +82,11 @@
                                                         Tak Terkategori
                                                     @endif
                                                 </td>
-                                                <td>{{ $item->mentor_name }}</td>
+                                                <td>
+                                                    @foreach ($item->mentors as $mentor)
+                                                        <p>{{ $mentor->name }}</p>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{ 'Rp ' . number_format($item->price, 0, ',', '.') }}</td>
                                                 <td>{{ date('d F Y', strtotime($item->start_course)) }}</td>
                                                 <td>

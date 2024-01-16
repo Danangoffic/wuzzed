@@ -43,9 +43,10 @@ Route::prefix('/admin')->group(function(){
             Route::get('/edit/{id}', [AdminMentorController::class, 'edit'])->name('admin.mentor.edit');
             Route::post('/', [AdminMentorController::class, 'store'])->name('admin.mentor.store');
             Route::put('/{id}', [AdminMentorController::class, 'update'])->name('admin.mentor.update');
-            Route::put('/{id}/password', [AdminMentorController::class, 'update_password'])->name('admin.mentor.password');
-            Route::get('/add/{id}/user', [AdminMentorController::class, 'create_user'])->name('admin.mentor.add_user');
-            Route::post('/add/{id}/', [AdminMentorController::class, 'store_user'])->name('admin.mentor.store_user');
+            Route::middleware('admin')->put('/{id}/password', [AdminMentorController::class, 'update_password'])->name('admin.mentor.password');
+            Route::middleware('admin')->get('/add/{id}/user', [AdminMentorController::class, 'create_user'])->name('admin.mentor.add_user');
+            Route::middleware('admin')->post('/add/{member_id}/user', [AdminMentorController::class, 'store_user'])->name('admin.mentor.store_user');
+            Route::middleware('admin')->put('/update/{id}/user', [AdminMentorController::class, 'update_user_mentor'])->name('admin.mentor.update_user');
             Route::post('/course/add', [MentorController::class, 'store_in_course'])->name('admin.mentor.store_in_course');
         });
 
@@ -69,14 +70,56 @@ Route::prefix('/admin')->group(function(){
             });
         });
 
-        Route::prefix('category')->group(function(){
-            Route::get('/', [\App\Http\Controllers\admin\CourseCategoryController::class, 'index'])->name('admin.category.index');
-            Route::get('/create', [\App\Http\Controllers\admin\CourseCategoryController::class, 'create'])->name('admin.category.create');
-            Route::post('/', [\App\Http\Controllers\admin\CourseCategoryController::class, 'store'])->name('admin.category.store');
-            Route::get('/{id}/detail', [\App\Http\Controllers\admin\CourseCategoryController::class, 'show'])->name('admin.category.show');
-            Route::get('/{id}/edit', [\App\Http\Controllers\admin\CourseCategoryController::class, 'edit'])->name('admin.category.edit');
-            Route::put('/{id}/update', [\App\Http\Controllers\admin\CourseCategoryController::class, 'update'])->name('admin.category.update');
-            Route::delete('/{id}/delete', [\App\Http\Controllers\admin\CourseCategoryController::class, 'destroy'])->name('admin.category.destroy');
+        Route::middleware('admin')->group(function(){
+            Route::prefix('category')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\CourseCategoryController::class, 'index'])->name('admin.category.index');
+                Route::get('/create', [\App\Http\Controllers\admin\CourseCategoryController::class, 'create'])->name('admin.category.create');
+                Route::post('/', [\App\Http\Controllers\admin\CourseCategoryController::class, 'store'])->name('admin.category.store');
+                Route::get('/{id}/detail', [\App\Http\Controllers\admin\CourseCategoryController::class, 'show'])->name('admin.category.show');
+                Route::get('/{id}/edit', [\App\Http\Controllers\admin\CourseCategoryController::class, 'edit'])->name('admin.category.edit');
+                Route::put('/{id}/update', [\App\Http\Controllers\admin\CourseCategoryController::class, 'update'])->name('admin.category.update');
+                Route::delete('/{id}/delete', [\App\Http\Controllers\admin\CourseCategoryController::class, 'destroy'])->name('admin.category.destroy');
+            });
+
+            Route::prefix('user')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\UserController::class, 'index'])->name('admin.user');
+                Route::get('/create', [\App\Http\Controllers\admin\UserController::class, 'create'])->name('admin.user.create');
+                Route::post('/', [\App\Http\Controllers\admin\UserController::class, 'store'])->name('admin.user.store');
+                Route::get('/{id}', [\App\Http\Controllers\admin\UserController::class, 'show'])->name('admin.user.show');
+                Route::get('/{id}/edit', [\App\Http\Controllers\admin\UserController::class, 'edit'])->name('admin.user.edit');
+                Route::put('/{id}/update', [\App\Http\Controllers\admin\UserController::class, 'update'])->name('admin.user.update');
+                Route::delete('/{id}/delete', [\App\Http\Controllers\admin\UserController::class, 'destroy'])->name('admin.user.destroy');
+            });
+
+            Route::prefix('setting')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\SettingController::class, 'index'])->name('admin.setting');
+                Route::get('/create', [\App\Http\Controllers\admin\SettingController::class, 'create'])->name('admin.setting.create');
+                Route::post('/', [\App\Http\Controllers\admin\SettingController::class, 'store'])->name('admin.setting.store');
+                Route::get('/{id}', [\App\Http\Controllers\admin\SettingController::class, 'show'])->name('admin.setting.show');
+                Route::get('/{id}/edit', [\App\Http\Controllers\admin\SettingController::class, 'edit'])->name('admin.setting.edit');
+                Route::put('/{id}/update', [\App\Http\Controllers\admin\SettingController::class, 'update'])->name('admin.setting.update');
+                Route::delete('/{id}/delete', [\App\Http\Controllers\admin\SettingController::class, 'destroy'])->name('admin.setting.destroy');
+            });
+
+            Route::prefix('student')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\StudentController::class, 'index'])->name('admin.student');
+                Route::get('/{id}', [\App\Http\Controllers\admin\StudentController::class, 'show'])->name('admin.student.show');
+                Route::get('/create', [\App\Http\Controllers\admin\StudentController::class, 'create'])->name('admin.student.create');
+                Route::post('/', [\App\Http\Controllers\admin\StudentController::class, 'store'])->name('admin.student.store');
+                Route::get('/{id}/edit', [\App\Http\Controllers\admin\StudentController::class, 'edit'])->name('admin.student.edit');
+                Route::put('/{id}/update', [\App\Http\Controllers\admin\StudentController::class, 'update'])->name('admin.student.update');
+                Route::delete('/{id}/delete', [\App\Http\Controllers\admin\StudentController::class, 'destroy'])->name('admin.student.destroy');
+            });
+
+            Route::prefix('setting-sections')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\SectionController::class, 'index'])->name('admin.setting.sections');
+
+            });
+
+            Route::prefix('setting-content')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\ContentWidgetController::class, 'index'])->name('admin.setting.content');
+
+            });
         });
     });
 });
@@ -91,5 +134,5 @@ Route::get('/kursus', [GuestCourseController::class,'index'])->name('kursus.inde
 Route::get('/kursus/{slug}', [GuestCourseController::class, 'show'])->name('kursus.show');
 Route::post('/kursus/{slug}/register/{id}', [GuestCourseController::class, 'store'])->name('kursus.register');
 
-Route::get('/detail-course', [GuestController::class, 'detail_course'])->name('detail-course');
-Route::get('/detail-webinar', [GuestController::class, 'detail_webinar'])->name('detail-webinar');
+Route::get('/course/{slug?}', [GuestController::class, 'detail_course'])->name('detail-course');
+Route::get('/webinar/{slug}', [GuestController::class, 'detail_webinar'])->name('detail-webinar');

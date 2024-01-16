@@ -11,7 +11,7 @@
     <div class="max-w-screen-xl mx-auto my-12 px-4 xl:px-12">
         <div class="flex flex-col lg:flex-row gap-4 lg:gap-8 items-start">
             <div class="w-full lg:basis-2/3 text-gray-700">
-                <h1 class="text-2xl text-[#7F56D9] md:text-3xl font-extrabold mb-4">Human Resouce Development</h1>
+                <h1 class="text-2xl text-[#7F56D9] md:text-3xl font-extrabold mb-4">{{ $course->name }}</h1>
                 <div class="mb-2">
                     <h2 class=" text-sm lg:text-lg font-bold">(Deskripsi Webinar)</h2>
                 </div>
@@ -186,10 +186,12 @@
                             <h2 class="text-sm lg:text-lg font-medium text-gray-500 mb-4">Detail Pembelian</h2>
                             <div class="flex justify-between mb-6 gap-4 items-start">
                                 <div class="hidden lg:block basis-1/5">
-                                    <img src="{{ asset('assets/web/images/course/course-1.jpg') }}" class="w-full h-auto rounded-lg" alt="">
+                                    <img src="{{ asset('assets/web/images/course/course-1.jpg') }}"
+                                        class="w-full h-auto rounded-lg" alt="">
                                 </div>
                                 <div class="basis-3/5">
-                                    <h2 class="text-sm lg:text-lg text-gray-900 font-medium">Human Resource Development</h2>
+                                    <h2 class="text-sm lg:text-lg text-gray-900 font-medium">Human Resource Development
+                                    </h2>
                                     <p class="text-sm text-gray-500">Webinar</p>
                                 </div>
                                 <div class="basis-1/5">

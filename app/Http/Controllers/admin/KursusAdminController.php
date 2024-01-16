@@ -19,11 +19,11 @@ class KursusAdminController extends Controller
      */
     public function index()
     {
-        $initData = Course::with(['category']);
+        $initData = Course::with(['category', 'mentors']);
         if(auth()->user()->role == 'mentor') {
-            $dataKursus = $initData->where('mentor_id', auth()->user()->id)->latest()->paginate(15);
+            $dataKursus = $initData->where('mentor_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(15);
         } else {
-            $dataKursus = $initData->latest()->paginate(15);
+            $dataKursus = $initData->orderBy('id', 'DESC')->paginate(15);
         }
         return view('admin.kursus.index', ['kursus' => $dataKursus]);
     }
@@ -59,6 +59,7 @@ class KursusAdminController extends Controller
                 'status' => 'string|in:draft,published',
                 'mentor_id' => 'required',
                 'start_course' => 'nullable|date',
+                'start_course_time' => 'nullable|string',
                 'url_kursus' => 'nullable|string',
                 'category_id' => 'required'
             ]);
@@ -87,6 +88,10 @@ class KursusAdminController extends Controller
                 //throw $th;
                 Log::debug("failed to upload poster: " . $th->getMessage());
                 return redirect()->route('admin.kursus.add')->with('error',  'Poster gagal diupload karena ' . $th->getMessage() . ' at line ' . $th->getLine() . ' at code ' . $th->getCode())->withInput();
+            }
+            // mix the start_course and start_course_time
+            if ($request->post('start_course') && $request->post('start_course_time')) {
+                $validatedData['start_course'] = Carbon::parse($request->post('start_course') . ' ' . $request->post('start_course_time'))->format('Y-m-d H:i:s');
             }
 
             // $validatedData['mentor_name'] = $mentor->name;
@@ -128,37 +133,96 @@ class KursusAdminController extends Controller
     public function edit(Course $course)
     {
         $categories = \App\Models\CourseCategories::all();
-        return view('admin.kursus.edit', ['kursus' => $course, 'categories' => $categories]);
+        $mentors = Mentor::all();
+        $course->load('mentors');
+        $mentor = $course->mentors()->first();
+        return view('admin.kursus.edit', ['kursus' => $course, 'categories' => $categories, 'mentors' => $mentors, 'mk' => $mentor]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Course $course)
     {
-        $course = Course::findOrFail($id);
-        if($course){
-            // Validasi data
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'certificate' => 'required',
-                'thumbnail' => 'nullable|file|image|mimes:jpeg,png,jpg|max:2048',
-                'type' => 'required|in:free,premium',
-                'description' => 'required|string',
-                'price' => 'required|integer',
-                'level' => 'nullable|string',
-                'duration' => 'nullable|integer',
-                'status' => 'string|in:draft,published',
-                'mentor_name' => 'string|required|max:255',
-                'start_course' => 'required|date',
-                'url_kursus' => 'nullable|string',
-                'category_id' => 'nullable|exist:course_categories,id'
-            ]);
-            $validatedData['slug'] = str($validatedData['name'])->slug()->value();
-            $course->update($validatedData);
-            return redirect()->route('admin.kursus')->with('success', 'Kursus berhasil Diupdate');
-        }else{
-            return redirect()->route('admin.kursus')->with('error', 'Kursus Gagal Diupdate');
+        // $course = Course::findOrFail($id);
+        try {
+            if($course){
+                // Validasi data
+                $validatedData = $request->validate([
+                    'name' => 'required|string|max:255',
+                    'certificate' => 'required',
+                    'thumbnail' => 'nullable|file|image|mimes:jpeg,png,jpg|max:5120',
+                    'poster' => 'nullable|file|image|mimes:jpeg,png,jpg|max:5120',
+                    'type' => 'required|in:free,premium',
+                    'jenis' => 'required|in:live,online,bootcamp,e-book',
+                    'description' => 'required|string',
+                    'price' => 'required|integer',
+                    'level' => 'nullable|string',
+                    'duration' => 'nullable|integer',
+                    'status' => 'string|in:draft,published',
+                    'mentor_id' => 'required',
+                    'start_course' => 'nullable|date',
+                    'start_course_time' => 'nullable|string',
+                    'url_kursus' => 'nullable|string',
+                    'category_id' => 'required'
+                ]);
+                // validate mentor id
+                $validated_mentor = Mentor::findOrFail($request->input('mentor_id'));
+                if(!$validated_mentor){
+                    return redirect()->route('admin.kursus.edit', $course->id)->with('error', 'Mentor tidak ditemukan');
+                }
+                $validatedData['slug'] = str($validatedData['name'])->slug()->value();
+                if($request->hasFile('thumbnail')){
+                    if($course->thumbnail!= null){
+                        if(!Storage::delete($course->thumbnail)){
+                            return redirect()->route('admin.kursus.edit', ['course' => $course])->with('error', 'Thumbnail gagal
+                            dihapus')->withInput();
+                        }
+                    }
+                    $thumbnail = $request->file('thumbnail')->store('thumbnail', ['disk' => 'public']);
+                    if($thumbnail){
+                        $validatedData['thumbnail'] = $thumbnail;
+                    }else{
+                        return redirect()->route('admin.kursus.edit', $course->id)->with('error', 'Thumbnail Gagal di upload');
+                    }
+
+                }
+                if($request->hasFile('poster')){
+                    if($course->poster!= null){
+                        if(!Storage::delete($course->poster)){
+                            return redirect()->route('admin.kursus.edit', ['course' => $course])->with('error', 'Poster gagal
+                            dihapus')->withInput();
+                        }
+                    }
+                    $poster = $request->file('poster')->store('poster', ['disk' => 'public']);
+                    if($poster){
+                        $validatedData['poster'] = $poster;
+                    }else{
+                        return redirect()->route('admin.kursus.edit', $course->id)->with('error', 'Poster gagal di upload');
+                    }
+                }
+
+                // update mentor course data
+                $mentor_course = MentorsCourse::where('course_id', $course->id)->first();
+                if($mentor_course){
+                    $mentor_course->mentor_id = $request->input('mentor_id');
+                    $mentor_course->update();
+                }else{
+                    MentorsCourse::create([
+                        'mentor_id' => $request->input('mentor_id'),
+                        'course_id' => $course->id
+                    ]);
+                }
+
+
+                $course->update($validatedData);
+                return redirect()->route('admin.kursus.show', $course->id)->with('success', 'Kursus berhasil Diupdate');
+            }else{
+                return redirect()->route('admin.kursus.edit', ['course' => $course])->with('error', 'Kursus Gagal Diupdate');
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->route('admin.kursus.edit', ['course' => $course])->with('error', 'Kursus Gagal Diupdate karena ' . $th->getMessage());
         }
     }
 

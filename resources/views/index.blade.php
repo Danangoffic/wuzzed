@@ -74,7 +74,8 @@
             </div>
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-12 lg:my-20 px-4 xl:px-12">
+    @each('components.category-cards.index', $live_course, 'category')
+    {{-- <div class="max-w-screen-xl mx-auto my-12 lg:my-20 px-4 xl:px-12">
         <h1 class="mb-0 md:md:mb-1 text-2xl md:text-3xl font-extrabold">Your <span class="text-[#7F56D9]">Completed
                 Courses</span>
         </h1>
@@ -86,23 +87,10 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4">
             @for ($i = 0; $i <= 3; $i++)
-                <div class="p-4 w-full bg-white shadow-lg md:shadow-card rounded-lg">
-                    <img class="rounded-lg mb-4" src="{{ asset('assets/web/images/course/course-1.jpg') }}"
-                        alt="" />
-                    <h3 class="text-lg md:text-base font-bold text-gray-900 mb-2 mb-1">Digital Marketing</h3>
-                    <h5 class="text-sm md:text-xs text-gray-700 mb-4">Accomplished on 7 July, 2022</h5>
-                    {{-- <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise
-                        technology.</p> --}}
-                    <a href="" class="block w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 mb-2">Download
-                        Certificate</a>
-                    <a href="#"
-                        class="w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 py-3 inline-flex justify-center items-center">Share
-                        to LinkedIn <img src="{{ asset('assets/web/icons/ic-linkedin.png') }}" class="w-4 ml-2"
-                            alt=""></a>
-                </div>
+                @include('components.cards.live')
             @endfor
         </div>
-    </div>
+    </div> --}}
     <div class="max-w-screen-xl mx-auto my-16 lg:my-20 px-4 xl:px-12">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Most <span class="text-[#7F56D9]">Popular Course</span>
         </h1>
@@ -157,9 +145,8 @@
                                     <path
                                         d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                 </svg>
-                                <svg class="w-5 h-5 md:w-3 md:h-3 me-1 text-gray-300 dark:text-gray-500"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                    viewBox="0 0 22 20">
+                                <svg class="w-5 h-5 md:w-3 md:h-3 me-1 text-gray-300 dark:text-gray-500" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                                     <path
                                         d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                                 </svg>
@@ -269,7 +256,8 @@
                         </svg> --}}
                     </div>
                     <h5 class="text-sm text-gray-700 mb-4">Digital Marketing</span></h5>
-                    <a href="#" class="block w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 mb-2">Get it
+                    <a href="#"
+                        class="block w-full bg-[#F8F4FF] text-sm md:text-xs text-gray-700 text-center py-3 mb-2">Get it
                         Now</a>
                 </div>
             @endfor
@@ -354,8 +342,8 @@
                         <p class="mb-4 text-sm text-gray-500">December 12, 2022, 22.45</p>
                         <div class="flex items-center space-x-4">
                             <div>
-                                <img class="w-8 h-8 sm:w-5 sm:h-5 lg:w-8 lg:h-8 rounded-full" src="{{ asset('assets/web/icons/ic-person.png') }}"
-                                    alt="">
+                                <img class="w-8 h-8 sm:w-5 sm:h-5 lg:w-8 lg:h-8 rounded-full"
+                                    src="{{ asset('assets/web/icons/ic-person.png') }}" alt="">
                             </div>
                             <div class="flex items-center divide-x-2 divide-gray-300 gap-x-3">
                                 <h3 class="text-sm md:text-xs text-gray-900">Danang Arif Rahmanda</h3>

@@ -17,7 +17,7 @@ class MentorController extends Controller
      */
     public function index()
     {
-        $mentors = Mentor::latest()->paginate(15);
+        $mentors = Mentor::orderBy('id', 'DESC')->get();
         return view('admin.mentors.index', ['mentors' => $mentors]);
     }
 
@@ -45,8 +45,15 @@ class MentorController extends Controller
 
     public function create_user(string $id)
     {
-        $mentor = Mentor::findOrFail($id);
-        return view('admin.mentors.create_user', compact('mentor'));
+        $mentor = Mentor::with('user')->findOrFail($id);
+        $type_form = 'create';
+        $form_action = route('admin.mentor.store_user', $id);
+        if($mentor->user){
+            $type_form = 'edit';
+            $form_action = route('admin.mentor.update_user', $mentor->user->id);
+        }
+
+        return view('admin.mentors.create_user', ['mentor' => $mentor, 'type_form' => $type_form, 'form_action' => $form_action]);
     }
 
     /**
@@ -58,7 +65,7 @@ class MentorController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'nullable|email|unique:mentors,email',
-                'phone' => 'nullable|string',
+                'biography' => 'nullable|string',
                 'profession' => 'nullable|string',
                 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 // tambahkan validasi untuk atribut lainnya
@@ -110,23 +117,32 @@ class MentorController extends Controller
                 'phone' => 'nullable|string',
                 'profession' => 'nullable|string',
                 'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'type_form' => 'required|string'
                 // tambahkan validasi untuk atribut lainnya
             ]);
-            $mentor = Mentor::create($validatedData);
+            if($request->post('type_form') == 'edit'){
+                $mentor = Mentor::findOrFail($request->post('id'));
+                $mentor->email = $request->post('email');
+                $mentor->password = Hash::make($request->post('password'));
+                $mentor->update();
+            }else if($request->post('type_form') == 'create'){
+                $mentor = Mentor::create($validatedData);
+            }
             return redirect()->route('admin.kursus.add')->with('success', 'Data mentor berhasil ditambahkan');
         } catch (\Throwable $th) {
              return redirect()->route('admin.kursus.add')->with('error', 'Data mentor Gagal ditambahkan karena ' . $th->getMessage());
         }
     }
 
-    public function store_user(Request $request, string $id)
+    public function store_user(Request $request, string $member_id)
     {
         $credentialMentor = $request->validate([
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|confirmed',
             'email' => 'required|string|email|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $mentor = Mentor::findOrFail($id);
+        $mentor = Mentor::findOrFail($member_id);
+        // dd($mentor);
         if($mentor->email){
             if($credentialMentor['email'] != $mentor->email){
                 return back()->with('error', "Email mentor tidak sesuai dengan database")->withInput();
@@ -151,12 +167,33 @@ class MentorController extends Controller
         try {
             $create = User::create($data);
             $mentor->user_id = $create->id;
-            $mentor->email = $create->email;
             $mentor->save();
+            if($request->get('next')){
+                return redirect($request->get('next'))->with('success', 'Berhasil buatkan user pada mentor');
+            }
             return redirect()->route('admin.mentor')->with('success', 'Berhasil buatkan user pada mentor');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Gagal buatkan user pada mentor')->withInput();
+            return back()->with('error', 'Gagal buatkan user pada mentor karena ' . $th->getMessage())->withInput();
         }
+    }
+
+    public function update_user_mentor(Request $request, string $id)
+    {
+        $credentialMentor = $request->validate([
+            'password' => 'required|confirmed',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $user = User::findOrFail($id);
+        $user->password = Hash::make($credentialMentor['password']);
+        if($request->hasFile('avatar')){
+            if($user->avatar != null){
+                Storage::delete($user->avatar);
+            }
+            $pathStoring = $request->file('avatar')->store('/assets/img/avatar', 'public');
+            $user->avatar = $pathStoring;
+        }
+        $user->save();
+        return redirect()->route('admin.mentor')->with('success', 'Berhasil update user pada mentor');
     }
 
     /**
@@ -173,7 +210,11 @@ class MentorController extends Controller
     public function edit(string $id)
     {
         $mentor = Mentor::with(['user', 'courses'])->findOrFail($id);
-        return view('admin.mentors.edit', ['mentor' => $mentor]);
+        $type_form = 'create';
+        if($mentor->user){
+            $type_form = 'edit';
+        }
+        return view('admin.mentors.edit', ['mentor' => $mentor, 'type_form' => $type_form]);
     }
 
     /**

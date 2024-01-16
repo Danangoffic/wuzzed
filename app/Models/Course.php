@@ -93,5 +93,11 @@ class Course extends Model
         return $this->hasMany(UserCourseActivity::class);
     }
 
+    // get detail course by slug
+    public static function getDetailCourseBySlug($slug)
+    {
+        return Course::with('category', 'mentors', 'enrollments')->where('slug', $slug)->firstOrFail();
+    }
+
 
 }

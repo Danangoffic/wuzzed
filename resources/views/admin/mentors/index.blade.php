@@ -39,7 +39,6 @@
                                 <tr>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
                                     <th>Profession</th>
                                     <th>Action</th>
                                 </tr>
@@ -49,7 +48,6 @@
                                     <tr>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->phone }}</td>
                                         <td><?= $item->profession ?></td>
                                         <td>
                                             @if (!$item->user_id)
@@ -66,9 +64,9 @@
                         </table>
                     </div>
                     <!-- /.card-body -->
-                    <div class="card-footer">
+                    {{-- <div class="card-footer">
                         {{ $mentors->links() }}
-                    </div>
+                    </div> --}}
                     <!-- /.card-footer-->
                 </div>
             </div>

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Student extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'name', 'email', 'phone', 'address', 'gender'];
+    protected $fillable = ['user_id', 'name', 'email', 'phone', 'address', 'province_id', 'city_id', 'photo', 'status'];
 
     public function user()
     {

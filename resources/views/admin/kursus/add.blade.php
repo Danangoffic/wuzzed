@@ -22,6 +22,15 @@
     <section class="content">
         <div class="row mb-3">
             <div class="col-md-12">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @if (Session::has('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}
@@ -61,25 +70,33 @@
 
                                     <div class="form-group mb-3">
                                         <label for="certificate">Sertifikat</label>
-                                        <select class="form-control" id="certificate" name="certificate" required>
+                                        <select class="custom-select" id="certificate" name="certificate" required>
                                             <option value="1">Ya</option>
                                             <option value="0">Tidak</option>
                                         </select>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="coursePoster">Poster Kursus</label>
-                                        <input type="file" class="form-control-file" id="coursePoster" name="poster"
+                                        <div>
+                                            <label for="coursePoster"
+                                                class="btn btn-default py-0 px-2 btn-sm rounded-lg">Pilih
+                                                Poster</label>
+                                        </div>
+                                        <input type="file" class="d-none" id="coursePoster" name="poster"
                                             onchange="previewImage('coursePoster', 'posterPreview')">
                                         @error('poster')
                                             <span class="text-xs text-danger">{{ $message }}</span>
                                         @enderror
                                         <div class="row">
                                             <div class="col-11">
+                                                <span class="text-info text-sm loading-coursePoster"
+                                                    style="display: none">Loading...</span>
                                                 <img id="posterPreview" class="mt-2 img-thumbnail"
                                                     style="width: 450px; display: none;" alt="Poster Preview">
                                             </div>
                                             <div class="col-1">
-                                                <button type="button" class="btn btn-danger btn-sm mt-2 coursePoster-btn"
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm py-1 mt-2 coursePoster-btn"
                                                     style="display: none"
                                                     onclick="cancelFile('coursePoster', 'posterPreview')">x</button>
                                             </div>
@@ -89,19 +106,26 @@
 
                                     <div class="form-group mb-3">
                                         <label for="courseThumbnail">Thumbnail Kursus</label>
-                                        <input type="file" class="form-control-file" id="courseThumbnail"
-                                            name="thumbnail" onchange="previewImage('courseThumbnail', 'thumbnailPreview')">
+                                        <div>
+                                            <label for="courseThumbnail"
+                                                class="btn btn-default py-0 px-2 btn-sm rounded-lg">Pilih
+                                                Thumbnail</label>
+                                        </div>
+                                        <input type="file" class="d-none" id="courseThumbnail" name="thumbnail"
+                                            onchange="previewImage('courseThumbnail', 'thumbnailPreview')">
                                         @error('thumbnail')
                                             <span class="text-xs text-danger">{{ $message }}</span>
                                         @enderror
                                         <div class="row">
                                             <div class="col-11">
+                                                <span class="text-info text-sm loading-courseThumbnail"
+                                                    style="display: none">Loading...</span>
                                                 <img id="thumbnailPreview" class="mt-2 img-thumbnail"
                                                     style="width: 450px; display: none;" alt="Thumbnail Preview">
                                             </div>
                                             <div class="col-1">
                                                 <button type="button"
-                                                    class="btn btn-danger btn-sm mt-2 courseThumbnail-btn"
+                                                    class="btn btn-danger btn-sm py-1 mt-2 courseThumbnail-btn"
                                                     style="display: none"
                                                     onclick="cancelFile('courseThumbnail', 'thumbnailPreview')">x</button>
                                             </div>
@@ -109,12 +133,12 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="jenis">Jenis</label>
-                                        <select class="form-control" id="jenis" name="jenis" required
+                                        <select class="custom-select" id="jenis" name="jenis" required
                                             onchange="changeJenis(this.value)">
                                             <option value="live" @if (old('jenis') == 'live') selected @endif>
                                                 Webinar
                                             </option>
-                                            {{-- <option value="online" @if (old('jenis') == 'online') selected @endif>Online
+                                            {{-- <option value="online" @if (old('jenis') == 'online') selected @endif>Online Video
                                             </option>
                                             <option value="bootcamp" @if (old('jenis') == 'bootcamp') selected @endif>
                                                 Bootcamp</option>
@@ -124,11 +148,12 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="type">Tipe</label>
-                                        <select class="form-control" id="type" name="type" required>
+                                        <select class="custom-select" id="type" name="type" required>
                                             {{-- <option value="free" @if (old('type') == 'free') selected @endif>Gratis
                                             </option> --}}
                                             <option value="premium" @if (old('type') == 'free') selected @endif>
-                                                Premium</option>
+                                                Premium
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group mb-3">
@@ -145,7 +170,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="category_id">Kategori</label>
-                                        <select name="category_id" id="category_id" class="form-control">
+                                        <select name="category_id" id="category_id" class="custom-select">
                                             <option value="" disabled>Pilih Kategori</option>
                                             @foreach ($categories as $item)
                                                 <option value="{{ $item->id }}"
@@ -161,7 +186,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="level">Tingkat</label>
-                                        <select class="form-control" id="level" name="level">
+                                        <select class="custom-select" id="level" name="level">
                                             <option value="all-level" @if (old('level') == 'all-level') selected @endif>
                                                 Semua Level</option>
                                             <option value="beginner" @if (old('level') == 'beginner') selected @endif>
@@ -174,7 +199,9 @@
                                     </div>
 
                                     <div class="form-group mb-3">
-                                        <label for="duration">Durasi</label>
+                                        <label for="duration">
+                                            Durasi <small class="text-info font-weight-lighter">(Dalam Menit)</small>
+                                        </label>
                                         <input type="number" class="form-control" id="duration" name="duration"
                                             required value="{{ old('duration') }}">
                                     </div>
@@ -188,18 +215,39 @@
                                     <div class="form-group mb-3">
                                         <label for="mentor_id">Nama Mentor</label>
                                         <select class="form-control" id="mentor_id" name="mentor_id">
+                                            <option value="" disabled selected>--Pilih Mentor--</option>
                                             @foreach ($mentors as $mentor)
                                                 <option value="{{ $mentor->id }}">{{ $mentor->name }}</option>
                                             @endforeach
                                         </select>
-                                        <a class="btn btn-default btn-sm mt-2" href="{{ route('admin.mentor.add') }}"
-                                            target="_blank">
-                                            Tambah Mentor Baru
-                                        </a>
-                                        <button type="button" class="btn btn-default btn-sm mt-2"
-                                            onclick="refreshMentorData()">
-                                            Refresh Mentor Data
-                                        </button>
+                                        <div>
+                                            <a class="btn btn-default btn-sm mt-2" href="{{ route('admin.mentor.add') }}"
+                                                target="_blank">
+                                                Tambah Mentor Baru
+                                            </a>
+                                            <button type="button" class="btn btn-default btn-sm mt-2"
+                                                onclick="refreshMentorData()">
+                                                Refresh Mentor Data
+                                            </button>
+                                        </div>
+                                        @error('mentor_id')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="start_course">Jadwal Webinar</label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <input type="date" name="start_course" id="start_course"
+                                                    value="{{ old('start_course') ?? date('Y-m-d') }}"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="time" class="form-control" name="start_course_time"
+                                                    id="start_course_time"
+                                                    value="{{ old('start_course_time') ?? date('H:i') }}">
+                                            </div>
+                                        </div>
                                     </div>
 
                                     {{-- <div class="form-group mb-3">
@@ -234,8 +282,15 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group mb-3" id="add-new-mentor-name">
-                            <label for="name">Nama Mentor</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            @include('components.forms.input', [
+                                'type' => 'text',
+                                'nama' => 'name',
+                                'label' => 'Nama Mentor',
+                                'placeholder' => 'Masukkan Nama Mentor',
+                                'required' => true,
+                            ])
+                            {{-- <label for="name">Nama Mentor</label>
+                            <input type="text" class="form-control" id="name" name="name" required> --}}
                         </div>
 
                     </div>
@@ -292,15 +347,20 @@
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
             const btnClass = document.querySelector(`.${inputId}-btn`);
-
+            const loadingInput = document.querySelector(".loading-" + inputId);
+            loadingInput.style.display = "";
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.src = e.target.result;
                     preview.style.display = 'block';
                 };
+                console.log({
+                    file: input.files[0]
+                });
                 reader.readAsDataURL(input.files[0]);
                 btnClass.style.display = "";
+                loadingInput.style.display = "none";
             }
         }
 

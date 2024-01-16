@@ -19,7 +19,7 @@
         </div>
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
+        {{-- <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search"
                     aria-label="Search">
@@ -29,7 +29,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -67,7 +67,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.category.index') }}"
                                 class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-book"></i>
+                                <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
                                     Category
                                 </p>
@@ -75,6 +75,86 @@
                         </li>
                     </ul>
 
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Pages
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.kursus') }}"
+                                class="nav-link {{ Route::is('admin.kursus') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-book"></i>
+                                <p>
+                                    List
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.category.index') }}"
+                                class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-layer-group"></i>
+                                <p>
+                                    Category
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                <li
+                    class="nav-item {{ Route::is('admin.student') || Route::is('admin.mentor') || Route::is('admin.user') ? 'menu-is-opening menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ Route::is('admin.student') || Route::is('admin.mentor') || Route::is('admin.user') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-layer-group"></i>
+                        <p>
+                            Users
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" @if (Route::is('admin.student') || Route::is('admin.mentor') || Route::is('admin.user')) @else style="display: none;" @endif>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.student') }}"
+                                class="nav-link {{ Route::is('admin.student') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Student
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.mentor') }}"
+                                class="nav-link {{ Route::is('admin.mentor') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user-tie"></i>
+                                <p>
+                                    Mentor
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.user') }}"
+                                class="nav-link {{ Route::is('admin.user') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    user
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                {{-- <li class="nav-item">
+                    <a href="{{ route('admin.student') }}"
+                        class="nav-link {{ Route::is('admin.student') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Student
+                        </p>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('admin.mentor') }}"
@@ -85,6 +165,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.user') }}"
+                        class="nav-link {{ Route::is('admin.user') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            user
+                        </p>
+                    </a>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -16,9 +16,12 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique()->nullable();
+            $table->string('phone')->unique();
             $table->string('address')->nullable();
-            $table->string('gender')->nullable();
+            $table->unsignedBigInteger('province_id');
+            $table->unsignedBigInteger('city_id');
+            $table->string('photo')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
