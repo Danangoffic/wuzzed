@@ -68,14 +68,14 @@
                                 <div class="form-group mb-3">
                                     <label for="poster" class="mb-0">Poster</label>
                                     <div>
-                                        <img width="450" src="{{ public_path('storage/' . $kursus->poster) }}"
+                                        <img width="450" src="{{ env('APP_URL') . '/storage/' . $kursus->poster }}"
                                             alt="Poster" class="img-thumbnail">
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="thumbnail" class="mb-0">Thumbnail</label>
                                     <div>
-                                        <img width="200" src="{{ public_path('storage/' . $kursus->thumbnail) }}"
+                                        <img width="200" src="{{ env('APP_URL') . '/storage/' . $kursus->thumbnail }}"
                                             alt="Thumbnail" class="img-thumbnail">
                                     </div>
                                 </div>
