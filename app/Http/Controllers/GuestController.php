@@ -74,7 +74,7 @@ class GuestController extends Controller
 
     public function detail_webinar(Request $request, $slug)
     {
-        $live_data = Course::getDetailCourseBySlug($slug);
+        $live_data = Course::with('reviews')->where('slug', $slug)->firstOrFail();
         return view('detail-webinar', ['course' => $live_data]);
     }
 }

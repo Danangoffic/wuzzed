@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="max-w-screen-xl mx-auto xl:px-12">
+    <div class="max-w-screen-xl mx-auto xl:px-12" data-aos="fade-in">
         <div class="jumbotron-carousel owl-carousel owl-theme relative z-10">
             <div class="bg-cover bg-center bg-no-repeat rounded-xl bg-gray-500 bg-blend-multiply w-full"
                 style="background-image: url('{{ asset('assets/web/images/home-slider/lauren-mancke-aOC7TSLb1o8-unsplash.jpg') }}')">
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div class="mx-auto lg:py-4 bg-gradient-to-t from-[#F8F4FF] to-[#FFFFFF]">
+    <div class="mx-auto lg:py-4 bg-gradient-to-t from-[#F8F4FF] to-[#FFFFFF]" data-aos="fade-in">
         <div class="max-w-screen-xl mx-auto py-8 lg:my-8 px-4 xl:px-12">
             <div class="lg:grid lg:grid-cols-6 gap-x-16">
                 <div class="lg:col-span-1 my-auto">
@@ -74,7 +74,8 @@
             </div>
         </div>
     </div>
-    @each('components.category-cards.index', $live_course, 'category')
+    @include('components.category-cards.index')
+    {{-- @each('components.category-cards.index', $live_course, 'category') --}}
     {{-- <div class="max-w-screen-xl mx-auto my-12 lg:my-20 px-4 xl:px-12">
         <h1 class="mb-0 md:md:mb-1 text-2xl md:text-3xl font-extrabold">Your <span class="text-[#7F56D9]">Completed
                 Courses</span>
@@ -91,7 +92,7 @@
             @endfor
         </div>
     </div> --}}
-    <div class="max-w-screen-xl mx-auto my-16 lg:my-20 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-16 lg:my-20 px-4 xl:px-12" data-aos="fade-in">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Most <span class="text-[#7F56D9]">Popular Course</span>
         </h1>
         <div class="md:flex md:justify-between items-center mb-2 md:mb-6">
@@ -163,7 +164,7 @@
             @endfor
         </div>
     </div>
-    <div class="mx-auto my-8 md:my-12"
+    <div data-aos="fade-in" class="mx-auto my-8 md:my-12"
         style="background: linear-gradient(45deg, rgba(8, 79, 199, 0.90) 26.49%, rgba(127, 86, 217, 0.90) 85.53%)">
         <div class="mx-auto py-12 lg:py-16 relative px-4 xl:px-12">
             <div
@@ -226,7 +227,7 @@
             </div>
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-6 lg:my-16 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-6 lg:my-16 px-4 xl:px-12" data-aos="fade-in">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Top 10 <span class="text-[#7F56D9]">Favorite
             </span>Video</h1>
         <h3 class="text-sm md:text-md text-gray-400 mb-4">Let’s join our best courses with our famous mentor
@@ -263,7 +264,7 @@
             @endfor
         </div>
     </div>
-    <div class="bg-[#F8F4FF] rounded-3xl py-6 md:py-6">
+    <div class="bg-[#F8F4FF] rounded-3xl py-6 md:py-6" data-aos="fade-in">
         <div class="max-w-screen-xl mx-auto my-6 md:my-6 px-4 xl:px-12">
             <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold">Top 10 <span class="text-[#7F56D9]">Active
                     Learning</span> Video</h1>
@@ -302,7 +303,7 @@
             </div>
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-12 md:my-16 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-12 md:my-16 px-4 xl:px-12" data-aos="fade-in">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold text-[#7F56D9] text-center">Testimonials</h1>
         <h3 class="mb-4 text-sm md:text-md text-gray-400 text-center">What our members say about us</h3>
         <div class="testimonial-carousel owl-carousel owl-theme">
@@ -355,7 +356,7 @@
             @endfor
         </div>
     </div>
-    <div class="max-w-screen-xl mx-auto my-12 md:my-16 px-4 xl:px-12">
+    <div class="max-w-screen-xl mx-auto my-12 md:my-16 px-4 xl:px-12" data-aos="fade-in">
         <h1 class="md:mb-1 text-2xl md:text-3xl font-extrabold"> <span class="text-[#7F56D9]">Hot Threads</span> and
             <span class="text-[#7F56D9]">New Articles</span>
         </h1>
@@ -404,6 +405,7 @@
 @endsection
 
 @push('after-style')
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         .jumbotron-carousel.owl-theme .owl-nav .owl-prev {
             position: absolute;
@@ -533,7 +535,9 @@
 @endpush
 
 @push('after-script')
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
+        AOS.init();
         $(document).ready(function() {
             $(".jumbotron-carousel").owlCarousel({
                 loop: false,

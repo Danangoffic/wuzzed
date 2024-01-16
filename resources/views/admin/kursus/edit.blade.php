@@ -229,24 +229,41 @@
                                         @enderror
                                     </div>
                                     <div class="form-group mb-3">
-                                        <x-forms.Select :nama="'status'" :required="true" :classInput="'form-control'"
-                                            :label="'Status'">
-                                            <option value="draft" @if ($kursus->status == 'draft') selected @endif>Draft
+                                        <label for="{{ 'status' }}" class="form-label">{{ 'Status' }}</label>
+
+                                        <select name="{{ 'status' }}" id="{{ 'status' }}"
+                                            class="form-control" required>
+                                            <option value="draft" @if ($kursus->status == 'draft') selected @endif>
+                                                Draft
                                             </option>
                                             <option value="published" @if ($kursus->status == 'published') selected @endif>
                                                 Published</option>
-                                        </x-forms.Select>
+                                        </select>
+
+                                        @error('status')
+                                            <div class="invalid-feedback" role="alert">
+                                                <p>{{ $message }}</p>
+                                            </div>
+                                        @enderror
                                     </div>
                                     <div class="form-group mb-3">
-                                        <x-forms.Select :nama="'mentor_id'" :required="true" :classInput="'form-control'"
-                                            :label="'Nama Mentor'">
+                                        <label for="{{ 'mentor_id' }}">{{ 'Mentor Name' }}</label>
+
+                                        <select name="{{ 'mentor_id' }}" id="{{ 'mentor_id' }}"
+                                            class="form-control" required>
                                             <option value="" disabled selected>--Pilih Mentor--</option>
                                             @foreach ($mentors as $mentor)
                                                 <option value="{{ $mentor->id }}"
                                                     @if ($mk && $mk->id == $mentor->id) selected @endif>
                                                     {{ $mentor->name }}</option>
                                             @endforeach
-                                        </x-forms.Select>
+                                        </select>
+
+                                        @error('mentor_id')
+                                            <div class="invalid-feedback" role="alert">
+                                                <p>{{ $message }}</p>
+                                            </div>
+                                        @enderror
                                         <div>
                                             <a class="btn btn-default btn-sm mt-2" href="{{ route('admin.mentor.add') }}"
                                                 target="_blank">

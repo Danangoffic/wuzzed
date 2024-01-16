@@ -108,8 +108,8 @@
             <h1 class="text-2xl text-[#7F56D9] md:text-3xl font-extrabold mb-6">Fasilitator</h1>
             <img class="h-60 w-60 mx-auto lg:mx-0 rounded-xl mb-3 lg:mb-4"
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80"
-                alt="">
-            <div>
+                alt="" data-aos="fade-up">
+            <div data-aos="fade-in">
                 <h3 class="text-lg lg:text-2xl font-bold text-center lg:text-left leading-7 lg:mb-1">Leslie Alexander</h3>
                 <p class="text-sm lg:text-lg font-semibold text-center lg:text-left mb-3">Co-Founder / CEO</p>
                 <div class="text-sm lg:text-lg">
@@ -128,7 +128,8 @@
     {{-- REGISTER --}}
     <div class="max-w-screen-xl mx-auto mb-12 lg:mb-20 px-4 xl:px-12">
         <div class="text-center rounded-xl text-white p-6 lg:p-10"
-            style="background: linear-gradient(45deg, rgba(127, 86, 217, 0.90) 10%, rgba(8, 79, 199, 0.90) 50%, rgba(127, 86, 217, 0.90) 80%)">
+            style="background: linear-gradient(45deg, rgba(127, 86, 217, 0.90) 10%, rgba(8, 79, 199, 0.90) 50%, rgba(127, 86, 217, 0.90) 80%)"
+            data-aos="fade-up">
             <div class="mb-8">
                 <h3 class="text-xl mb-1">Normal Price</h3>
                 <h3 class="text-xl mb-2 line-through">Rp299.000</h3>
@@ -234,3 +235,12 @@
         </div>
     </div>
 @endsection
+@push('after-style')
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+@endpush
+@push('after-script')
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+@endpush

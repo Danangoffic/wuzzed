@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\Mentor;
+use App\Models\Review;
 use App\Models\Enrollment;
 use App\Models\GuestCourse;
 use App\Models\MentorsCourse;
@@ -85,6 +86,16 @@ class Course extends Model
     public function favorites()
     {
         return $this->belongsToMany(User::class, 'favorite_courses', 'course_id', 'user_id');
+    }
+
+    /**
+     * Get all of the reviews for the Course
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'course_id', 'id');
     }
 
     // user_course_activities
