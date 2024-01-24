@@ -55,7 +55,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function enrollments(): HasMany
+    public function enrollments()
     {
         return $this->hasMany(Enrollment::class);
     }
@@ -70,7 +70,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function mentor(): HasOne
+    public function mentor()
     {
         return $this->hasOne(Mentor::class);
     }
@@ -80,7 +80,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function shoppingCarts(): HasMany
+    public function shoppingCarts()
     {
         return $this->hasMany(ShoppingCart::class, 'user_id', 'id');
     }

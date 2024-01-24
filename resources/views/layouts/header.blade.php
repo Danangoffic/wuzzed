@@ -1,8 +1,8 @@
 <nav class="bg-[#04016C] h-20 md:h-12 flex items-center justify-center">
     <div class="max-w-screen-xl px-4 lg:px-12 mx-auto">
         <a href="#">
-            <h3 class="text-white text-center inline-flex items-center">Materi Gratis 🌟 Promo Akan Berakhir, Dapatkan Segera! <span
-                    class="pl-4 material-icons">
+            <h3 class="text-white text-center inline-flex items-center">Materi Gratis 🌟 Promo Akan Berakhir, Dapatkan
+                Segera! <span class="pl-4 material-icons">
                     arrow_forward
                 </span></h3>
         </a>
@@ -16,7 +16,7 @@
         </a>
         <div class="flex items-center lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
             {{-- LOGGED IN --}}
-            @if (Auth::check() && Auth::user()->role == 'student')
+            @auth
                 <div class="inline-flex items-center">
 
                     <button type="button" class="flex text-sm bg-white rounded-full lg:me-0" id="user-menu-button"
@@ -43,7 +43,7 @@
                         </li>
                     </ul>
                 </div>
-            @endif
+            @endauth
 
             {{-- NOT LOGGED IN --}}
             @guest
@@ -124,8 +124,8 @@
             </a>
             <button type="button" data-drawer-hide="drawer-right" aria-controls="drawer-right"
                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-xs w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white">
-                <svg class="w-3 h-3 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 14 14">
+                <svg class="w-3 h-3 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
                         d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                 </svg>

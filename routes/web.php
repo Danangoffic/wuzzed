@@ -111,6 +111,23 @@ Route::prefix('/admin')->group(function(){
                 Route::delete('/{id}/delete', [\App\Http\Controllers\admin\StudentController::class, 'destroy'])->name('admin.student.destroy');
             });
 
+            Route::prefix('settings')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\SettingController::class, 'index'])->name('admin.settings');
+                Route::get('/create', [\App\Http\Controllers\admin\SettingController::class, 'create'])->name('admin.settings.create');
+                Route::post('/', [\App\Http\Controllers\admin\SettingController::class, 'store'])->name('admin.settings.store');
+                Route::get('/{id}', [\App\Http\Controllers\admin\SettingController::class, 'show'])->name('admin.settings.show');
+                Route::get('/{id}/edit', [\App\Http\Controllers\admin\SettingController::class, 'edit'])->name('admin.settings.edit');
+                Route::put('/{id}/update', [\App\Http\Controllers\admin\SettingController::class, 'update'])->name('admin.settings.update');
+                Route::delete('/{id}/destroy', [\App\Http\Controllers\admin\SettingController::class, 'destroy'])->name('admin.settings.destroy');
+            });
+
+            Route::prefix('orders')->group(function(){
+                Route::get('/', [\App\Http\Controllers\admin\OrderController::class, 'index'])->name('admin.orders');
+                Route::get('/{id}/edit', [\App\Http\Controllers\admin\OrderController::class, 'edit'])->name('admin.orders.edit');
+                Route::put('/{id}/update', [\App\Http\Controllers\admin\OrderController::class, 'update'])->name('admin.orders.update');
+
+            });
+
             Route::prefix('setting-sections')->group(function(){
                 Route::get('/', [\App\Http\Controllers\admin\SectionController::class, 'index'])->name('admin.setting.sections');
 
@@ -119,17 +136,26 @@ Route::prefix('/admin')->group(function(){
             Route::prefix('setting-content')->group(function(){
                 Route::get('/', [\App\Http\Controllers\admin\ContentWidgetController::class, 'index'])->name('admin.setting.content');
 
+
             });
         });
     });
 });
 
 Route::get('/', [GuestController::class, 'index'])->name('home');
-Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'doLogin'])->name('login.store');
-Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'doRegister'])->name('register.store');
-Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
+Route::middleware('guest')->group(function(){
+    Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('login');
+    Route::post('/login', [App\Http\Controllers\AuthController::class, 'doLogin'])->name('login.store');
+
+    Route::get('/register', [App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::post('/register', [App\Http\Controllers\AuthController::class, 'doRegister'])->name('register.store');
+});
+
+Route::middleware('student')->group(function(){
+    Route::get('/profile', [App\Http\Controllers\AuthController::class, 'profile'])->name('profile');
+    Route::post('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+});
+
 Route::get('/kursus', [GuestCourseController::class,'index'])->name('kursus.index');
 Route::get('/kursus/{slug}', [GuestCourseController::class, 'show'])->name('kursus.show');
 Route::post('/kursus/{slug}/register/{id}', [GuestCourseController::class, 'store'])->name('kursus.register');

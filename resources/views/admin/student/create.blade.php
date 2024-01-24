@@ -20,6 +20,7 @@ use App\Models\User;
 
     <!-- Main content -->
     <section class="content">
+        @include('admin.template.static-alert')
         <!-- Default box -->
         <div class="row">
             <form action="{{ route('admin.mentor.store') }}" method="post">

@@ -19,8 +19,9 @@
 
     <!-- Main content -->
     <section class="content">
+        @include('admin.template.static-alert')
         <div class="row mb-3">
-            <div class="col-6">
+            <div class="col-12">
                 <a class="btn btn-primary" href="{{ route('admin.student.create') }}">Tambah Student</a>
                 {{-- <a href="{{ route('admin.mentor.add') }}" class="btn btn-primary">
                     Tambah User

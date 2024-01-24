@@ -34,24 +34,7 @@
 
     <!-- Main content -->
     <section class="content">
-        @if (Session::has('success'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-success">
-                        {{ Session::get('success') }}
-                    </div>
-                </div>
-            </div>
-        @endif
-        @if (Session::has('error'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-danger">
-                        {{ Session::get('error') }}
-                    </div>
-                </div>
-            </div>
-        @endif
+        @include('admin.template.static-alert')
         <form action="{{ $form_action }}" method="post" enctype="multipart/form-data">
             @csrf
             @if ($type_form == 'edit')

@@ -11,10 +11,10 @@ class SectionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sections = Section::all();
-        return view('admin.', compact('sections'));
+        $sections = Section::paginate(10);
+        return view('admin.settings.sections.index', compact('sections', 'request'));
     }
 
     /**
@@ -22,7 +22,8 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        $type_sections = Section::type;
+        return view('admin.settings.sections.create', compact('type_sections'));
     }
 
     /**

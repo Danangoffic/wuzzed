@@ -19,6 +19,7 @@
 
     <!-- Main content -->
     <section class="content">
+        @include('admin.template.static-alert')
         <div class="row mb-3">
             <div class="col-6">
                 <div class="btn-group">

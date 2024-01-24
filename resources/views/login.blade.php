@@ -18,10 +18,10 @@
                                 <div>
                                     <label for="email"
                                         class="block mb-4 text-sm font-medium text-gray-900 dark:text-white">Email
-                                        </label>
+                                    </label>
                                     <input type="email" name="email" id="email"
                                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        placeholder="name@company.com" required>
+                                        placeholder="name@company.com" required value="{{ old('email') }}">
                                 </div>
                                 <div>
                                     <label for="password"

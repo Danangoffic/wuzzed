@@ -20,6 +20,7 @@
 
     <!-- Main content -->
     <section class="content">
+        @include('admin.template.static-alert')
         <!-- /.card -->
         <div class="row">
             <div class="col-12">

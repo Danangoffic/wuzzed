@@ -29,7 +29,8 @@ return new class extends Migration
             $table->boolean('is_range')->default(false);
             $table->dateTime('start_course')->nullable();
             $table->dateTime('end_course')->nullable();
-            $table->date('early_bird')->nullable();
+            $table->date('early_bird_start')->nullable();
+            $table->date('early_bird_end')->nullable();
             $table->integer('early_bird_price')->nullable();
             // $table->string('url_course')->nullable();
             $table->integer('duration');

@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Daftar User</h1>
+                    <h1>Daftar Settings</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active">Settings</li>
                     </ol>
                 </div>
             </div>
@@ -19,21 +19,10 @@
 
     <!-- Main content -->
     <section class="content">
+        @include('admin.template.static-alert')
         <div class="row mb-3">
-            <div class="col-6">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Tambah Data
-                    </button>
-                    <div class="dropdown-menu" style="">
-                        <a class="dropdown-item" href="#">Tambah User Student</a>
-                        <a class="dropdown-item" href="#">Tambah User Mentor</a>
-                    </div>
-                </div>
-                {{-- <a href="{{ route('admin.mentor.add') }}" class="btn btn-primary">
-                    Tambah User
-                </a> --}}
+            <div class="col-12">
+                <a href="{{ route('admin.settings.create') }}" class="btn btn-primary">Tambahkan Data</a>
             </div>
         </div>
         <!-- Default box -->
@@ -45,7 +34,7 @@
                             <thead>
                                 <tr>
                                     <th>Group</th>
-                                    <th>Parameter</th>
+                                    <th>Key</th>
                                     <th>Value</th>
                                     <th>Status</th>
                                     <th>Creation Date</th>
@@ -54,7 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $item)
+                                @forelse ($settings as $item)
                                     <tr>
                                         <td>{{ $item->group }}</td>
                                         <td>{{ $item->parameter }}</td>
@@ -69,8 +58,14 @@
                                             {{ $item->updated_at }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.user.edit', $item->id) }}"
-                                                class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a>
+                                            <form action="{{ route('admin.settings.destroy', $item->id) }}" method="post">
+                                                <a href="{{ route('admin.settings.edit', $item->id) }}"
+                                                    class="btn btn-success btn-sm">Edit</a>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Yakin Menghapus setting ini?')">Hapus</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty
@@ -84,7 +79,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        {{ $users->links('vendor.pagination.bootstrap-4') }}
+                        {{ $settings->links('vendor.pagination.bootstrap-4') }}
                     </div>
                     <!-- /.card-footer-->
                 </div>
@@ -94,28 +89,28 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <form action="{{ route('admin.user') }}" method="get" class="form-horizontal">
+                    <form action="{{ route('admin.settings') }}" method="get" class="form-horizontal">
                         <div class="card-body">
 
                             <div class="input-group row mb-3">
-                                <label class="col-sm-2 col-form-label">Nama:</label>
+                                <label class="col-sm-2 col-form-label" for="group">Group:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" value="{{ $request->get('nama') }}" name="nama"
-                                        class="form-control" placeholder="Nama">
+                                    <input type="text" value="{{ $request->get('group') }}" name="group"
+                                        id="group" class="form-control" placeholder="Group">
                                 </div>
                             </div>
                             <div class="input-group row mb-3">
-                                <label class="col-sm-2 col-form-label">Email:</label>
+                                <label class="col-sm-2 col-form-label">Key:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="email" class="form-control" placeholder="Email"
-                                        value="{{ $request->get('email') }}">
+                                    <input type="text" name="key" class="form-control" placeholder="Key"
+                                        value="{{ $request->get('key') }}">
                                 </div>
                             </div>
                             <div class="input-group row mb-3">
-                                <label class="col-sm-2 col-form-label">Role:</label>
+                                <label class="col-sm-2 col-form-label">Value:</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="role" class="form-control" placeholder="Role"
-                                        value="{{ $request->get('role') }}">
+                                    <input type="text" name="value" class="form-control" placeholder="Value"
+                                        value="{{ $request->get('value') }}">
                                 </div>
                             </div>
 
@@ -131,21 +126,3 @@
     </section>
     <!-- /.content -->
 @endsection
-@push('after-style')
-    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/summernote/summernote.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/admin/plugins/toastr/toastr.min.css') }}">
-@endpush
-@push('after-script')
-    <script src="{{ asset('assets/admin/plugins/summernote/summernote.min.js') }}"></script>
-    <script src="{{ asset('assets/admin/plugins/toastr/toastr.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            @if (Session::has('success'))
-                toastr.success("{{ session('success') }}", 'Success');
-            @endif
-            @if (Session::has('error'))
-                toastr.error("{{ session('error') }}", 'Error');
-            @endif
-        });
-    </script>
-@endpush

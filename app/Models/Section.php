@@ -12,8 +12,8 @@ class Section extends Model
 {
     use HasFactory;
 
-    public static $type = [
-        'banner', 'card', 'gallery', 'text', 'video', 'image', 'slider',
+    const type = [
+        'banner', 'card', 'banner', 'gallery', 'text', 'video', 'image', 'slider',
         'course_list', 'course_detail', 'course_review', 'course_faq', 'course_curriculum', 'course_instructor'
     ];
 

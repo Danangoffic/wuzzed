@@ -20,6 +20,7 @@
 
     <!-- Main content -->
     <section class="content">
+        @include('admin.template.static-alert')
         <form action="{{ route('admin.user.store') }}" method="post">
             @csrf
             <div class="row">

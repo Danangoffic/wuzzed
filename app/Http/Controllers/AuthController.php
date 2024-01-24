@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\RegisterRequest;
 
@@ -19,22 +20,33 @@ class AuthController extends Controller
 
     public function doLogin(Request $request)
     {
+        Log::info('masuk proses login', ['request' => $request->only('email', 'password')]);
         $credentials = $request->validate([
             'email' => 'required|email|exists:users,email',
             'password' => 'required',
         ]);
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], true)) {
+            Log::info('user attempt to process login is success!');
+            Log::info('get user data from database by email, with load student, enrollments, and shopping carts');
+
+            $user = \App\Models\User::with(['student', 'mentor', 'enrollments', 'shoppingCarts'])->where('email', $credentials['email'])->first();
+            Log::info('login user with user data', ['user' => $user]);
+
+            auth()->login($user, true);
+            Log::info("login user with user data");
             $request->session()->regenerate();
             // generate token
-            $token = Auth::user()->createToken('user-token-course-' . Auth::user()->id);
+            $token = Auth::user()->createToken('user-token-course-' . auth()->user()->id);
             $request->session()->put('token', $token->plainTextToken);
 
             if($request->has('next')){
+                Log::info('redirect to next url', ['next' => $request->next]);
                 return redirect($request->next);
             }
+            Log::info('redirect to home');
             return redirect()->route('home');
         }
-        return back()->with('loginError', 'Login failed!')->withInput();
+        return redirecit()->route('login')->with('loginError', 'Login failed!Email atau password salah!')->withInput();
     }
 
     public function register(Request $request)
@@ -80,10 +92,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        if(Auth::check()){
-            Auth::user()->currentAccessToken()->delete();
-        }
-        Auth::logout();
+        $request->user()->tokens()->delete();
+        auth()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('home');
@@ -94,7 +104,6 @@ class AuthController extends Controller
     public function profile()
     {
         $data['user'] = Auth::user();
-        $data['user']['role'] = $data['user']['role'];
         return view('profile.user-profile', $data);
     }
 }

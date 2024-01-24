@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 
 class Enrollment extends Model
 {
@@ -38,5 +39,21 @@ class Enrollment extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public static function getUniqueCodeEnrollmentByCourse($course_id)
+    {
+        $today = Carbon::now();
+
+        // Menghitung jumlah pendaftaran unik hari ini untuk kursus tertentu
+        $todayUniqueEnrollments = self::where('course_id', $course_id)
+            ->whereDate('created_at', $today)
+            ->count();
+
+        // Menetapkan awalan nomor unik
+        $prefixUniqueNumber = $todayUniqueEnrollments + 1;
+
+        // Menghasilkan kode unik dengan panjang tetap 3 digit
+        return intval(str_pad($prefixUniqueNumber, 3, mt_rand(1, 9), STR_PAD_LEFT));
     }
 }

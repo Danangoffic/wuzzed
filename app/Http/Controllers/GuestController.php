@@ -11,10 +11,20 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 class GuestController extends Controller
 {
     //
+    public $data = [];
+    public function __construct()
+    {
+        $this->data['meta_title'] = 'Home';
+        $this->data['meta_description'] = 'Home';
+        $this->data['meta_keywords'] = 'kursus,online,belajar';
+    }
+
     public function index()
     {
         $data[] = null;
-        $phase = 0;
+        $phase = \App\Models\Setting::getValueByGroupAndParameter('SETTING', 'PHASE');
+
+        // $phase = 0;
         if($phase > 0){
             if(auth()->check() && auth()->user()->role == 'student'){
                 // get current user course activity that not completed yet in learning_progress table
@@ -55,6 +65,7 @@ class GuestController extends Controller
 
         $categories = \App\Models\CourseCategories::withWhereHas('courses', function (Builder $query) {
                                     $query
+                                    ->with(['enrollments', 'mentors', 'reviews', 'user_course_activities'])
                                     ->where('jenis', 'live')
                                     ->where('status', 'published')
                                     ->orderBy('id', 'DESC');
@@ -68,13 +79,56 @@ class GuestController extends Controller
 
     public function detail_course(Request $request, $slug)
     {
-        $course = Course::getDetailCourseBySlug($slug);
-        return view('detail-course', ['course' => $course]);
+        $course = Course::with('reviews')->where(['slug' => $slug, 'status' => 'published'])->firstOrFail();
+        if($course->jenis == 'live'){
+            return redirect()->route('detail-webinar', $course->slug);
+        }
+        $hasEarlyBirdPrice = $course->early_bird_price > 0 && $course->early_bird_start > now() && $course->early_bird_end < now();
+        $banks = \App\Models\Bank::all();
+        $uniqueCodeTodayEnrollemnt = \App\Models\Enrollment::getUniqueCodeEnrollmentByCourse($course->id);
+        $price = $course->price;
+        if($hasEarlyBirdPrice){
+            $price = $course->early_bird_price;
+        }
+        $this->data['meta_title'] = $course->title;
+        $this->data['meta_description'] = $course->description;
+        $this->data['meta_keywords'] = $course->title;
+        $data = ['course' => $course, 'banks' => $banks, 'isEarlyBird' => $hasEarlyBirdPrice, 'unique_code' => $uniqueCodeTodayEnrollemnt, 'price' => $price];
+        foreach ($data as $key => $value) {
+            $this->data[$key] = $value;
+        }
+
+        return view('course.detail-course', $this->data);
     }
 
     public function detail_webinar(Request $request, $slug)
     {
-        $live_data = Course::with('reviews')->where('slug', $slug)->firstOrFail();
-        return view('detail-webinar', ['course' => $live_data]);
+        $live_data = Course::with('reviews')->where(['slug' => $slug, 'status' => 'published'])->firstOrFail();
+        if($live_data->jenis == 'online'){
+            return redirect()->route('detail-course', $slug);
+        }
+        $hasEarlyBirdPrice = $live_data->early_bird_price > 0 && $live_data->early_bird_start > now() && $live_data->early_bird_end < now();
+        $uniqueCodeTodayEnrollemnt = \App\Models\Enrollment::getUniqueCodeEnrollmentByCourse($live_data ->id);
+        $price = $live_data->price;
+        if($hasEarlyBirdPrice){
+            $price = $live_data->early_bird_price;
+        }
+
+        $banks = \App\Models\Bank::all();
+        $this->data['meta_title'] = $live_data->title;
+        $this->data['meta_description'] = $live_data->description;
+        $this->data['meta_keywords'] = $live_data->title;
+        $data = [
+            'course' => $live_data,
+            'banks' => $banks,
+            'isEarlyBird' => $hasEarlyBirdPrice,
+            'unique_code' => $uniqueCodeTodayEnrollemnt,
+            'price' => $price
+        ];
+        // push $data to $this->data
+        foreach ($data as $key => $value) {
+            $this->data[$key] = $value;
+        }
+        return view('course.detail-webinar', $this->data);
     }
 }

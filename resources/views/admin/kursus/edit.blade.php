@@ -22,20 +22,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="row mb-3">
-            <div class="col-md-12">
-                @if (Session::has('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
-                @if (Session::has('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                @endif
-            </div>
-        </div>
+        @include('admin.template.static-alert')
         <form action="{{ route('admin.kursus.update', $kursus->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
             @csrf

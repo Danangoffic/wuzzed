@@ -41,7 +41,8 @@ class Course extends Model
         'status',
         'mentor_name',
         'start_course',
-        'early_bird',
+        'early_bird_start',
+        'early_bird_end',
         'early_bird_price',
     ];
 
@@ -105,9 +106,9 @@ class Course extends Model
     }
 
     // get detail course by slug
-    public static function getDetailCourseBySlug($slug)
+    public static function getDetailCourseBySlug($slug, $type='online')
     {
-        return Course::with('category', 'mentors', 'enrollments')->where('slug', $slug)->firstOrFail();
+        return Course::with('category', 'mentors', 'enrollments')->where(['slug' => $slug, 'jenis' => $type, 'status' => 'published'])->firstOrFail();
     }
 
 

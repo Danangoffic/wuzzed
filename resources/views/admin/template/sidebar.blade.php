@@ -14,7 +14,7 @@
                 <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
                     <ul class="nav nav-treeview" style="display: none;">
                         <li class="nav-item">
                             <a href="{{ route('admin.kursus') }}"
-                                class="nav-link {{ Route::is('admin.kursus') ? 'active' : '' }}">
+                                class="nav-link @if (Route::is('admin.kursus')) active @endif">
                                 <i class="nav-icon fas fa-book"></i>
                                 <p>
                                     List
@@ -66,10 +66,41 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.category.index') }}"
-                                class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-layer-group"></i>
+                                class="nav-link @if (Route::is('admin.category.index')) active @endif">
+                                <i class="nav-icon fas fa-file"></i>
                                 <p>
                                     Category
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+                <li class="nav-item @if (in_array(Route::currentRouteName(), ['admin.setting.sections', 'admin.setting.content'])) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (in_array(Route::currentRouteName(), ['admin.setting.sections', 'admin.setting.content'])) active @endif">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Pages
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview"
+                        @if (in_array(Route::currentRouteName(), ['admin.setting.sections', 'admin.setting.content'])) style="display: block" @else style="display: none;" @endif>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.setting.sections') }}"
+                                class="nav-link @if (Route::is('admin.setting.sections')) active @endif">
+                                <i class="nav-icon fas fa-file-export ml-4"></i>
+                                <p>
+                                    Section
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.setting.content') }}"
+                                class="nav-link @if (Route::is('admin.setting.content')) active @endif">
+                                <i class="nav-icon fas fa-layer-group ml-4"></i>
+                                <p>
+                                    Content
                                 </p>
                             </a>
                         </li>
@@ -77,49 +108,27 @@
 
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                    <a href="{{ route('admin.orders') }}"
+                        class="nav-link @if (Route::is('admin.orders')) active @endif">
+                        <i class="nav-icon fas fa-clipboard-check"></i>
                         <p>
-                            Pages
-                            <i class="right fas fa-angle-left"></i>
+                            Pesanan
                         </p>
                     </a>
-                    <ul class="nav nav-treeview" style="display: none;">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.kursus') }}"
-                                class="nav-link {{ Route::is('admin.kursus') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-book"></i>
-                                <p>
-                                    List
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.category.index') }}"
-                                class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-layer-group"></i>
-                                <p>
-                                    Category
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-
                 </li>
-                <li
-                    class="nav-item {{ Route::is('admin.student') || Route::is('admin.mentor') || Route::is('admin.user') ? 'menu-is-opening menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ Route::is('admin.student') || Route::is('admin.mentor') || Route::is('admin.user') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-layer-group"></i>
+                <li class="nav-item @if (in_array(Route::currentRouteName(), ['admin.student', 'admin.mentor', 'admin.user'])) menu-is-opening menu-open @endif">
+                    <a href="#" class="nav-link @if (in_array(Route::currentRouteName(), ['admin.student', 'admin.mentor', 'admin.user'])) active @endif">
+                        <i class="nav-icon fas fa-user-pen"></i>
                         <p>
                             Users
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview" @if (Route::is('admin.student') || Route::is('admin.mentor') || Route::is('admin.user')) @else style="display: none;" @endif>
+                    <ul class="nav nav-treeview"
+                        @if (in_array(Route::currentRouteName(), ['admin.student', 'admin.mentor', 'admin.user'])) style="display: block" @else style="display: none" @endif>
                         <li class="nav-item">
                             <a href="{{ route('admin.student') }}"
-                                class="nav-link {{ Route::is('admin.student') ? 'active' : '' }}">
+                                class="nav-link @if (Route::is('admin.student')) active @endif">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Student
@@ -128,7 +137,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.mentor') }}"
-                                class="nav-link {{ Route::is('admin.mentor') ? 'active' : '' }}">
+                                class="nav-link @if (Route::is('admin.mentor')) active @endif">
                                 <i class="nav-icon fas fa-user-tie"></i>
                                 <p>
                                     Mentor
@@ -137,7 +146,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.user') }}"
-                                class="nav-link {{ Route::is('admin.user') ? 'active' : '' }}">
+                                class="nav-link @if (Route::is('admin.user')) active @endif">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     user
@@ -146,6 +155,15 @@
                         </li>
                     </ul>
 
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.settings') }}"
+                        class="nav-link @if (Route::is('admin.settings')) active @endif">
+                        <i class="nav-icon fa fa-wrench"></i>
+                        <p>
+                            Setting
+                        </p>
+                    </a>
                 </li>
                 {{-- <li class="nav-item">
                     <a href="{{ route('admin.student') }}"
